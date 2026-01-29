@@ -1,0 +1,44 @@
+Категорія;Назва;Призначення;Посилання;Вартість;Примітки
+ХОСТИНГ;Vercel;Хостинг веб-додатку;https://vercel.com;$0 (Hobby) / $20 (Pro);Рекомендовано для Next.js
+ХОСТИНГ;Neon.tech;PostgreSQL база даних;https://neon.tech;$0 (Free) / $19 (Pro);0.5GB безкоштовно
+ХОСТИНГ;Supabase;PostgreSQL + Auth + Storage;https://supabase.com;$0 (Free) / $25 (Pro);Альтернатива Neon
+ХОСТИНГ;Railway;Хостинг всього;https://railway.app;$5/міс;Простий в налаштуванні
+ХОСТИНГ;Hetzner;VPS сервер;https://hetzner.com;€4/міс;Для самостійного хостингу
+ХОСТИНГ;DigitalOcean;VPS сервер;https://digitalocean.com;$5/міс;Альтернатива Hetzner
+ФАЙЛИ;Uploadthing;Завантаження файлів;https://uploadthing.com;$0 (2GB);Простий в інтеграції
+ФАЙЛИ;Cloudflare R2;Зберігання файлів;https://cloudflare.com/r2;$0 (10GB);Без egress fee
+ДОМЕН;Namecheap;Реєстрація домену;https://namecheap.com;$10-15/рік;.com домени
+ДОМЕН;nic.ua;Українські домени;https://nic.ua;300-500 грн/рік;.ua домени
+РОЗРОБКА;VS Code;Редактор коду;https://code.visualstudio.com;$0;Основний інструмент
+РОЗРОБКА;GitHub;Репозиторій коду;https://github.com;$0;Контроль версій
+РОЗРОБКА;Node.js;JavaScript runtime;https://nodejs.org;$0;Версія 18+ LTS
+РОЗРОБКА;pnpm;Менеджер пакетів;https://pnpm.io;$0;Швидший за npm
+ФРЕЙМВОРК;Next.js;React фреймворк;https://nextjs.org;$0;Версія 14+
+ФРЕЙМВОРК;React;UI бібліотека;https://react.dev;$0;Версія 18+
+ФРЕЙМВОРК;Prisma;ORM для бази даних;https://prisma.io;$0;Робота з PostgreSQL
+ФРЕЙМВОРК;NextAuth.js;Авторизація;https://next-auth.js.org;$0;Логін/реєстрація
+UI;Tailwind CSS;CSS фреймворк;https://tailwindcss.com;$0;Utility-first CSS
+UI;shadcn/ui;Компоненти UI;https://ui.shadcn.com;$0;Копіюються в проект
+UI;Lucide Icons;Іконки;https://lucide.dev;$0;SVG іконки
+UI;Radix UI;Примітиви UI;https://radix-ui.com;$0;Accessibility
+ДОКУМЕНТИ;React-PDF;Генерація PDF;https://react-pdf.org;$0;Для звітів
+ДОКУМЕНТИ;jsPDF;Генерація PDF;https://parall.ax/products/jspdf;$0;Альтернатива
+ДОКУМЕНТИ;ExcelJS;Генерація Excel;https://github.com/exceljs/exceljs;$0;Для експорту
+ДОКУМЕНТИ;Docx-templates;Генерація Word;https://github.com/guigrpa/docx-templates;$0;Шаблони Word
+ГРАФІКИ;Chart.js;Графіки та діаграми;https://chartjs.org;$0;Прості графіки
+ГРАФІКИ;Recharts;React графіки;https://recharts.org;$0;Для React
+ГРАФІКИ;React-Gantt;Діаграма Ганта;npm: gantt-task-react;$0;Планування
+УТИЛІТИ;DXF-parser;Читання DXF файлів;https://github.com/gdsestimern/dxf-parser;$0;Для креслень
+УТИЛІТИ;QRCode;Генерація QR-кодів;npm: qrcode;$0;Для маршрутних листів
+УТИЛІТИ;date-fns;Робота з датами;https://date-fns.org;$0;Форматування дат
+УТИЛІТИ;Zod;Валідація даних;https://zod.dev;$0;Схеми валідації
+ФОРМИ;React Hook Form;Управління формами;https://react-hook-form.com;$0;Швидкі форми
+ТАБЛИЦІ;TanStack Table;Таблиці даних;https://tanstack.com/table;$0;Сортування, фільтри
+EMAIL;Resend;Відправка email;https://resend.com;$0 (100/день);Для сповіщень
+EMAIL;React Email;Шаблони email;https://react.email;$0;Красиві листи
+ТЕСТУВАННЯ;Vitest;Unit тести;https://vitest.dev;$0;Швидкі тести
+ТЕСТУВАННЯ;Playwright;E2E тести;https://playwright.dev;$0;Тестування UI
+НАВЧАННЯ;Next.js Docs;Документація Next.js;https://nextjs.org/docs;$0;Офіційна документація
+НАВЧАННЯ;Prisma Docs;Документація Prisma;https://prisma.io/docs;$0;Робота з БД
+НАВЧАННЯ;YouTube;Відео уроки;https://youtube.com;$0;Пошук: Next.js tutorial
+НАВЧАННЯ;Claude AI;AI асистент;https://claude.ai;$0-20/міс;Допомога з кодом

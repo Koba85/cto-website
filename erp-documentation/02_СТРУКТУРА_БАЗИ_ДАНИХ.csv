@@ -1,0 +1,278 @@
+Блок;Таблиця;Поле;Тип даних;Обов'язкове;Опис;Зв'язок з;Примітки
+СИСТЕМА;users;id;UUID;Так;Унікальний ідентифікатор;;Автогенерація
+СИСТЕМА;users;email;String;Так;Email для входу;;Унікальний
+СИСТЕМА;users;password;String;Так;Хеш пароля;;Шифрується
+СИСТЕМА;users;name;String;Так;ПІБ користувача;;
+СИСТЕМА;users;role_id;UUID;Так;Роль користувача;roles.id;
+СИСТЕМА;users;department;String;Ні;Підрозділ;;
+СИСТЕМА;users;phone;String;Ні;Телефон;;
+СИСТЕМА;users;is_active;Boolean;Так;Активний/заблокований;;За замовч. true
+СИСТЕМА;users;created_at;DateTime;Так;Дата створення;;Автоматично
+СИСТЕМА;users;updated_at;DateTime;Так;Дата оновлення;;Автоматично
+СИСТЕМА;roles;id;UUID;Так;Унікальний ідентифікатор;;
+СИСТЕМА;roles;name;String;Так;Назва ролі;;Адмін, Менеджер тощо
+СИСТЕМА;roles;permissions;JSON;Так;Права доступу;;Масив дозволів
+СИСТЕМА;audit_log;id;UUID;Так;Унікальний ідентифікатор;;
+СИСТЕМА;audit_log;user_id;UUID;Так;Хто змінив;users.id;
+СИСТЕМА;audit_log;action;String;Так;Дія;;CREATE/UPDATE/DELETE
+СИСТЕМА;audit_log;table_name;String;Так;Яка таблиця;;
+СИСТЕМА;audit_log;record_id;UUID;Так;ID запису;;
+СИСТЕМА;audit_log;old_value;JSON;Ні;Було;;
+СИСТЕМА;audit_log;new_value;JSON;Ні;Стало;;
+СИСТЕМА;audit_log;created_at;DateTime;Так;Коли;;
+ДОВІДНИКИ;units;id;UUID;Так;Унікальний ідентифікатор;;
+ДОВІДНИКИ;units;code;String;Так;Код одиниці;;шт, кг, м
+ДОВІДНИКИ;units;name;String;Так;Повна назва;;штука, кілограм
+ДОВІДНИКИ;units;is_active;Boolean;Так;Активна;;
+ДОВІДНИКИ;currencies;id;UUID;Так;Унікальний ідентифікатор;;
+ДОВІДНИКИ;currencies;code;String;Так;Код валюти;;UAH, EUR, USD
+ДОВІДНИКИ;currencies;name;String;Так;Назва;;Гривня, Євро
+ДОВІДНИКИ;currencies;symbol;String;Так;Символ;;₴, €, $
+ДОВІДНИКИ;currencies;rate;Decimal;Так;Курс до UAH;;1.00 для UAH
+ДОВІДНИКИ;currencies;rate_date;Date;Так;Дата курсу;;
+ДОВІДНИКИ;countries;id;UUID;Так;Унікальний ідентифікатор;;
+ДОВІДНИКИ;countries;code;String;Так;Код країни;;UA, DE, PL
+ДОВІДНИКИ;countries;name;String;Так;Назва;;Україна, Німеччина
+ДОВІДНИКИ;vat_rates;id;UUID;Так;Унікальний ідентифікатор;;
+ДОВІДНИКИ;vat_rates;name;String;Так;Назва;;20%, 7%, 0%, Без ПДВ
+ДОВІДНИКИ;vat_rates;rate;Decimal;Так;Ставка;;0.20, 0.07, 0
+ДОВІДНИКИ;vat_rates;is_default;Boolean;Так;За замовчуванням;;
+МАТЕРІАЛИ;material_groups;id;UUID;Так;Унікальний ідентифікатор;;
+МАТЕРІАЛИ;material_groups;name;String;Так;Назва групи;;Листовий прокат
+МАТЕРІАЛИ;material_groups;parent_id;UUID;Ні;Батьківська група;material_groups.id;Для ієрархії
+МАТЕРІАЛИ;material_grades;id;UUID;Так;Унікальний ідентифікатор;;
+МАТЕРІАЛИ;material_grades;name;String;Так;Марка матеріалу;;Ст3кп, 09Г2С
+МАТЕРІАЛИ;material_grades;type;String;Так;Тип;;вуглецева, нержавійка
+МАТЕРІАЛИ;material_grades;density;Decimal;Так;Густина кг/м³;;7850
+МАТЕРІАЛИ;material_grades;machinability;Decimal;Ні;Коеф. оброблюваності;;1.0 - базовий
+МАТЕРІАЛИ;materials;id;UUID;Так;Унікальний ідентифікатор;;
+МАТЕРІАЛИ;materials;code;String;Так;Артикул;;Унікальний код
+МАТЕРІАЛИ;materials;name;String;Так;Найменування;;Лист г/к 4×1250×2500
+МАТЕРІАЛИ;materials;group_id;UUID;Так;Група;material_groups.id;
+МАТЕРІАЛИ;materials;grade_id;UUID;Так;Марка;material_grades.id;
+МАТЕРІАЛИ;materials;unit_id;UUID;Так;Одиниця виміру;units.id;
+МАТЕРІАЛИ;materials;thickness;Decimal;Ні;Товщина мм;;Для листів
+МАТЕРІАЛИ;materials;width;Decimal;Ні;Ширина мм;;
+МАТЕРІАЛИ;materials;length;Decimal;Ні;Довжина мм;;
+МАТЕРІАЛИ;materials;diameter;Decimal;Ні;Діаметр мм;;Для кругу, труби
+МАТЕРІАЛИ;materials;wall_thickness;Decimal;Ні;Стінка мм;;Для труби
+МАТЕРІАЛИ;materials;weight_per_unit;Decimal;Так;Вага одиниці кг;;
+МАТЕРІАЛИ;materials;price;Decimal;Так;Ціна за од.;;
+МАТЕРІАЛИ;materials;currency_id;UUID;Так;Валюта ціни;currencies.id;
+МАТЕРІАЛИ;materials;price_date;Date;Так;Дата ціни;;
+МАТЕРІАЛИ;materials;supplier_id;UUID;Ні;Основний постачальник;contractors.id;
+МАТЕРІАЛИ;materials;min_stock;Decimal;Ні;Мінімальний запас;;
+МАТЕРІАЛИ;materials;is_active;Boolean;Так;Активний;;
+КОНТРАГЕНТИ;contractors;id;UUID;Так;Унікальний ідентифікатор;;
+КОНТРАГЕНТИ;contractors;type;String;Так;Тип;;client/supplier/subcontractor
+КОНТРАГЕНТИ;contractors;name;String;Так;Назва;;
+КОНТРАГЕНТИ;contractors;full_name;String;Ні;Повна назва;;
+КОНТРАГЕНТИ;contractors;edrpou;String;Ні;Код ЄДРПОУ;;8 цифр
+КОНТРАГЕНТИ;contractors;ipn;String;Ні;ІПН;;Індивід. податковий №
+КОНТРАГЕНТИ;contractors;is_vat_payer;Boolean;Так;Платник ПДВ;;
+КОНТРАГЕНТИ;contractors;vat_certificate;String;Ні;№ свідоцтва ПДВ;;
+КОНТРАГЕНТИ;contractors;legal_address;String;Ні;Юридична адреса;;
+КОНТРАГЕНТИ;contractors;actual_address;String;Ні;Фактична адреса;;
+КОНТРАГЕНТИ;contractors;phone;String;Ні;Телефон;;
+КОНТРАГЕНТИ;contractors;email;String;Ні;Email;;
+КОНТРАГЕНТИ;contractors;website;String;Ні;Веб-сайт;;
+КОНТРАГЕНТИ;contractors;bank_name;String;Ні;Назва банку;;
+КОНТРАГЕНТИ;contractors;bank_mfo;String;Ні;МФО банку;;
+КОНТРАГЕНТИ;contractors;bank_account;String;Ні;Розрахунковий рахунок;;IBAN
+КОНТРАГЕНТИ;contractors;payment_terms;String;Ні;Умови оплати;;Передоплата, відстрочка
+КОНТРАГЕНТИ;contractors;delivery_terms;String;Ні;Умови доставки;;
+КОНТРАГЕНТИ;contractors;country_id;UUID;Ні;Країна;countries.id;
+КОНТРАГЕНТИ;contractors;currency_id;UUID;Ні;Валюта розрахунків;currencies.id;
+КОНТРАГЕНТИ;contractors;is_active;Boolean;Так;Активний;;
+КОНТРАГЕНТИ;contractor_contacts;id;UUID;Так;Унікальний ідентифікатор;;
+КОНТРАГЕНТИ;contractor_contacts;contractor_id;UUID;Так;Контрагент;contractors.id;
+КОНТРАГЕНТИ;contractor_contacts;name;String;Так;ПІБ;;
+КОНТРАГЕНТИ;contractor_contacts;position;String;Ні;Посада;;
+КОНТРАГЕНТИ;contractor_contacts;phone;String;Ні;Телефон;;
+КОНТРАГЕНТИ;contractor_contacts;email;String;Ні;Email;;
+КОНТРАГЕНТИ;contractor_contacts;is_primary;Boolean;Так;Основний контакт;;
+ОРГАНІЗАЦІЯ;departments;id;UUID;Так;Унікальний ідентифікатор;;
+ОРГАНІЗАЦІЯ;departments;name;String;Так;Назва дільниці;;Заготівельна
+ОРГАНІЗАЦІЯ;departments;code;String;Так;Код;;ZAGOT
+ОРГАНІЗАЦІЯ;departments;head_id;UUID;Ні;Керівник;users.id;
+ОРГАНІЗАЦІЯ;departments;work_hours;Decimal;Так;Годин на зміну;;8
+ОРГАНІЗАЦІЯ;departments;shifts_count;Integer;Так;Кількість змін;;1, 2, 3
+ОРГАНІЗАЦІЯ;departments;is_active;Boolean;Так;Активна;;
+ОРГАНІЗАЦІЯ;equipment;id;UUID;Так;Унікальний ідентифікатор;;
+ОРГАНІЗАЦІЯ;equipment;name;String;Так;Назва обладнання;;Токарний 16К20
+ОРГАНІЗАЦІЯ;equipment;code;String;Так;Інвентарний №;;
+ОРГАНІЗАЦІЯ;equipment;department_id;UUID;Так;Дільниця;departments.id;
+ОРГАНІЗАЦІЯ;equipment;type;String;Так;Тип;;токарне, фрезерне
+ОРГАНІЗАЦІЯ;equipment;max_length;Decimal;Ні;Макс. довжина мм;;
+ОРГАНІЗАЦІЯ;equipment;max_diameter;Decimal;Ні;Макс. діаметр мм;;
+ОРГАНІЗАЦІЯ;equipment;max_thickness;Decimal;Ні;Макс. товщина мм;;
+ОРГАНІЗАЦІЯ;equipment;power_kw;Decimal;Ні;Потужність кВт;;
+ОРГАНІЗАЦІЯ;equipment;hourly_rate;Decimal;Так;Тариф грн/год;;Собівартість роботи
+ОРГАНІЗАЦІЯ;equipment;status;String;Так;Статус;;working/repair/reserve
+ОРГАНІЗАЦІЯ;equipment;is_active;Boolean;Так;Активне;;
+ОРГАНІЗАЦІЯ;warehouses;id;UUID;Так;Унікальний ідентифікатор;;
+ОРГАНІЗАЦІЯ;warehouses;name;String;Так;Назва складу;;Основний склад
+ОРГАНІЗАЦІЯ;warehouses;code;String;Так;Код;;WH01
+ОРГАНІЗАЦІЯ;warehouses;type;String;Так;Тип;;materials/finished/tools
+ОРГАНІЗАЦІЯ;warehouses;responsible_id;UUID;Ні;Відповідальний;users.id;
+ОРГАНІЗАЦІЯ;warehouses;is_active;Boolean;Так;Активний;;
+ТЕХНОЛОГІЯ;operations;id;UUID;Так;Унікальний ідентифікатор;;
+ТЕХНОЛОГІЯ;operations;code;String;Так;Код операції;;005, 010, 015
+ТЕХНОЛОГІЯ;operations;name;String;Так;Назва операції;;Токарна обробка
+ТЕХНОЛОГІЯ;operations;group;String;Так;Група;;заготівельна, механічна
+ТЕХНОЛОГІЯ;operations;description;Text;Ні;Опис;;
+ТЕХНОЛОГІЯ;operations;is_active;Boolean;Так;Активна;;
+ТЕХНОЛОГІЯ;operation_equipment;id;UUID;Так;Унікальний ідентифікатор;;Зв'язок операція-обладнання
+ТЕХНОЛОГІЯ;operation_equipment;operation_id;UUID;Так;Операція;operations.id;
+ТЕХНОЛОГІЯ;operation_equipment;equipment_id;UUID;Так;Обладнання;equipment.id;
+ТЕХНОЛОГІЯ;time_norms;id;UUID;Так;Унікальний ідентифікатор;;
+ТЕХНОЛОГІЯ;time_norms;operation_id;UUID;Так;Операція;operations.id;
+ТЕХНОЛОГІЯ;time_norms;equipment_id;UUID;Так;Обладнання;equipment.id;
+ТЕХНОЛОГІЯ;time_norms;material_group_id;UUID;Ні;Група матеріалу;material_groups.id;Для диференціації
+ТЕХНОЛОГІЯ;time_norms;thickness_from;Decimal;Ні;Товщина від мм;;
+ТЕХНОЛОГІЯ;time_norms;thickness_to;Decimal;Ні;Товщина до мм;;
+ТЕХНОЛОГІЯ;time_norms;length_from;Decimal;Ні;Довжина від мм;;
+ТЕХНОЛОГІЯ;time_norms;length_to;Decimal;Ні;Довжина до мм;;
+ТЕХНОЛОГІЯ;time_norms;setup_time;Decimal;Так;Тпз хвилин;;Підготовчо-заключний
+ТЕХНОЛОГІЯ;time_norms;piece_time;Decimal;Так;Тшт хвилин;;Штучний час
+ТЕХНОЛОГІЯ;time_norms;is_active;Boolean;Так;Активна;;
+ТЕХНОЛОГІЯ;consumables;id;UUID;Так;Унікальний ідентифікатор;;
+ТЕХНОЛОГІЯ;consumables;name;String;Так;Найменування;;Дріт зварювальний
+ТЕХНОЛОГІЯ;consumables;unit_id;UUID;Так;Одиниця виміру;units.id;
+ТЕХНОЛОГІЯ;consumables;price;Decimal;Так;Ціна;;
+ТЕХНОЛОГІЯ;consumables;is_active;Boolean;Так;Активний;;
+ТЕХНОЛОГІЯ;operation_consumables;id;UUID;Так;Унікальний ідентифікатор;;
+ТЕХНОЛОГІЯ;operation_consumables;operation_id;UUID;Так;Операція;operations.id;
+ТЕХНОЛОГІЯ;operation_consumables;consumable_id;UUID;Так;Розхідник;consumables.id;
+ТЕХНОЛОГІЯ;operation_consumables;consumption_rate;Decimal;Так;Норма витрат;;На одиницю або годину
+ТЕХНОЛОГІЯ;operation_consumables;rate_type;String;Так;Тип норми;;per_unit/per_hour
+КОЕФІЦІЄНТИ;batch_coefficients;id;UUID;Так;Унікальний ідентифікатор;;
+КОЕФІЦІЄНТИ;batch_coefficients;operation_group;String;Ні;Група операцій;;Або для всіх
+КОЕФІЦІЄНТИ;batch_coefficients;quantity_from;Integer;Так;Кількість від;;
+КОЕФІЦІЄНТИ;batch_coefficients;quantity_to;Integer;Так;Кількість до;;
+КОЕФІЦІЄНТИ;batch_coefficients;coefficient;Decimal;Так;Коефіцієнт;;0.65 - 1.0
+КОЕФІЦІЄНТИ;overhead_rates;id;UUID;Так;Унікальний ідентифікатор;;
+КОЕФІЦІЄНТИ;overhead_rates;name;String;Так;Назва;;Загальновиробничі
+КОЕФІЦІЄНТИ;overhead_rates;rate;Decimal;Так;Ставка %;;15, 20
+КОЕФІЦІЄНТИ;overhead_rates;base;String;Так;База нарахування;;labor/materials/production
+КОЕФІЦІЄНТИ;overhead_rates;is_active;Boolean;Так;Активна;;
+ВИРОБИ;projects;id;UUID;Так;Унікальний ідентифікатор;;
+ВИРОБИ;projects;number;String;Так;Номер проекту;;Автогенерація
+ВИРОБИ;projects;name;String;Так;Найменування;;Кронштейн КР-150
+ВИРОБИ;projects;client_id;UUID;Ні;Замовник;contractors.id;
+ВИРОБИ;projects;manager_id;UUID;Ні;Менеджер;users.id;
+ВИРОБИ;projects;designer_id;UUID;Ні;Конструктор;users.id;
+ВИРОБИ;projects;status;String;Так;Статус;;draft/design/approved/production/completed
+ВИРОБИ;projects;version;String;Так;Версія;;1.0
+ВИРОБИ;projects;created_at;DateTime;Так;Дата створення;;
+ВИРОБИ;projects;updated_at;DateTime;Так;Дата оновлення;;
+ВИРОБИ;items;id;UUID;Так;Унікальний ідентифікатор;;
+ВИРОБИ;items;project_id;UUID;Так;Проект;projects.id;
+ВИРОБИ;items;parent_id;UUID;Ні;Батьківський вузол;items.id;Для ієрархії
+ВИРОБИ;items;position;String;Так;Позначення;;КР-150-01
+ВИРОБИ;items;name;String;Так;Найменування;;Пластина основи
+ВИРОБИ;items;type;String;Так;Тип;;assembly/part/purchased/standard
+ВИРОБИ;items;quantity;Decimal;Так;Кількість на виріб;;
+ВИРОБИ;items;material_id;UUID;Ні;Матеріал;materials.id;Для деталей
+ВИРОБИ;items;blank_length;Decimal;Ні;Довжина заготовки мм;;
+ВИРОБИ;items;blank_width;Decimal;Ні;Ширина заготовки мм;;
+ВИРОБИ;items;blank_thickness;Decimal;Ні;Товщина заготовки мм;;
+ВИРОБИ;items;calculated_weight;Decimal;Ні;Розрахункова вага кг;;Автоматично
+ВИРОБИ;items;calculated_area;Decimal;Ні;Розрахункова площа м²;;Автоматично
+ВИРОБИ;items;material_cost;Decimal;Ні;Вартість матеріалу;;Автоматично
+ВИРОБИ;items;notes;Text;Ні;Примітки;;
+ВИРОБИ;item_routes;id;UUID;Так;Унікальний ідентифікатор;;Маршрут виготовлення
+ВИРОБИ;item_routes;item_id;UUID;Так;Деталь;items.id;
+ВИРОБИ;item_routes;sequence;Integer;Так;Порядковий №;;5, 10, 15
+ВИРОБИ;item_routes;operation_id;UUID;Так;Операція;operations.id;
+ВИРОБИ;item_routes;equipment_id;UUID;Ні;Обладнання;equipment.id;
+ВИРОБИ;item_routes;setup_time;Decimal;Так;Тпз хвилин;;
+ВИРОБИ;item_routes;piece_time;Decimal;Так;Тшт хвилин;;
+ВИРОБИ;item_routes;labor_cost;Decimal;Ні;Вартість роботи;;Автоматично
+ВИРОБИ;item_routes;notes;Text;Ні;Примітки;;
+КАЛЬКУЛЯЦІЯ;calculations;id;UUID;Так;Унікальний ідентифікатор;;
+КАЛЬКУЛЯЦІЯ;calculations;project_id;UUID;Так;Проект;projects.id;
+КАЛЬКУЛЯЦІЯ;calculations;version;Integer;Так;Версія калькуляції;;1, 2, 3
+КАЛЬКУЛЯЦІЯ;calculations;quantity;Integer;Так;Кількість;;1, 10, 100
+КАЛЬКУЛЯЦІЯ;calculations;materials_cost;Decimal;Так;Вартість матеріалів;;
+КАЛЬКУЛЯЦІЯ;calculations;purchased_cost;Decimal;Так;Покупні вироби;;
+КАЛЬКУЛЯЦІЯ;calculations;labor_cost;Decimal;Так;Вартість робіт;;
+КАЛЬКУЛЯЦІЯ;calculations;consumables_cost;Decimal;Так;Розхідні матеріали;;
+КАЛЬКУЛЯЦІЯ;calculations;overhead_cost;Decimal;Так;Накладні витрати;;
+КАЛЬКУЛЯЦІЯ;calculations;production_cost;Decimal;Так;Виробнича собівартість;;
+КАЛЬКУЛЯЦІЯ;calculations;profit_rate;Decimal;Так;Ставка прибутку %;;
+КАЛЬКУЛЯЦІЯ;calculations;profit;Decimal;Так;Прибуток;;
+КАЛЬКУЛЯЦІЯ;calculations;price_excl_vat;Decimal;Так;Ціна без ПДВ;;
+КАЛЬКУЛЯЦІЯ;calculations;vat_rate;Decimal;Так;Ставка ПДВ;;
+КАЛЬКУЛЯЦІЯ;calculations;vat;Decimal;Так;Сума ПДВ;;
+КАЛЬКУЛЯЦІЯ;calculations;price_incl_vat;Decimal;Так;Ціна з ПДВ;;
+КАЛЬКУЛЯЦІЯ;calculations;production_days;Decimal;Так;Термін виготовлення днів;;
+КАЛЬКУЛЯЦІЯ;calculations;batch_coefficient;Decimal;Так;Коефіцієнт партійності;;
+КАЛЬКУЛЯЦІЯ;calculations;complexity_coefficient;Decimal;Так;Коефіцієнт складності;;
+КАЛЬКУЛЯЦІЯ;calculations;urgency_coefficient;Decimal;Так;Коефіцієнт терміновості;;
+КАЛЬКУЛЯЦІЯ;calculations;created_by;UUID;Так;Створив;users.id;
+КАЛЬКУЛЯЦІЯ;calculations;created_at;DateTime;Так;Дата створення;;
+CRM;inquiries;id;UUID;Так;Унікальний ідентифікатор;;
+CRM;inquiries;number;String;Так;Номер запиту;;Автогенерація
+CRM;inquiries;date;Date;Так;Дата запиту;;
+CRM;inquiries;client_id;UUID;Ні;Клієнт;contractors.id;
+CRM;inquiries;contact_name;String;Ні;Контактна особа;;
+CRM;inquiries;contact_phone;String;Ні;Телефон;;
+CRM;inquiries;contact_email;String;Ні;Email;;
+CRM;inquiries;source;String;Ні;Джерело;;phone/email/website
+CRM;inquiries;description;Text;Так;Опис запиту;;
+CRM;inquiries;desired_date;Date;Ні;Бажана дата;;
+CRM;inquiries;budget;Decimal;Ні;Бюджет;;
+CRM;inquiries;manager_id;UUID;Ні;Менеджер;users.id;
+CRM;inquiries;status;String;Так;Статус;;new/processing/quoted/won/lost
+CRM;inquiries;created_at;DateTime;Так;Дата створення;;
+CRM;quotations;id;UUID;Так;Унікальний ідентифікатор;;
+CRM;quotations;number;String;Так;Номер КП;;КП-2024-001
+CRM;quotations;date;Date;Так;Дата;;
+CRM;quotations;inquiry_id;UUID;Ні;Запит;inquiries.id;
+CRM;quotations;client_id;UUID;Так;Клієнт;contractors.id;
+CRM;quotations;project_id;UUID;Ні;Проект;projects.id;
+CRM;quotations;calculation_id;UUID;Ні;Калькуляція;calculations.id;
+CRM;quotations;currency_id;UUID;Так;Валюта;currencies.id;
+CRM;quotations;total_excl_vat;Decimal;Так;Сума без ПДВ;;
+CRM;quotations;vat;Decimal;Так;ПДВ;;
+CRM;quotations;total_incl_vat;Decimal;Так;Сума з ПДВ;;
+CRM;quotations;delivery_terms;String;Ні;Умови доставки;;
+CRM;quotations;payment_terms;String;Ні;Умови оплати;;
+CRM;quotations;valid_until;Date;Ні;Дійсна до;;
+CRM;quotations;notes;Text;Ні;Примітки;;
+CRM;quotations;status;String;Так;Статус;;draft/sent/approved/rejected
+CRM;quotations;manager_id;UUID;Так;Менеджер;users.id;
+CRM;quotations;created_at;DateTime;Так;Дата створення;;
+CRM;contracts;id;UUID;Так;Унікальний ідентифікатор;;
+CRM;contracts;number;String;Так;Номер договору;;
+CRM;contracts;date;Date;Так;Дата договору;;
+CRM;contracts;client_id;UUID;Так;Клієнт;contractors.id;
+CRM;contracts;quotation_id;UUID;Ні;КП;quotations.id;
+CRM;contracts;subject;Text;Так;Предмет договору;;
+CRM;contracts;currency_id;UUID;Так;Валюта;currencies.id;
+CRM;contracts;total_amount;Decimal;Так;Сума договору;;
+CRM;contracts;vat_amount;Decimal;Так;Сума ПДВ;;
+CRM;contracts;prepayment_percent;Decimal;Ні;% передоплати;;
+CRM;contracts;payment_terms;String;Ні;Умови оплати;;
+CRM;contracts;delivery_terms;String;Ні;Умови доставки;;
+CRM;contracts;start_date;Date;Ні;Дата початку;;
+CRM;contracts;end_date;Date;Ні;Дата завершення;;
+CRM;contracts;status;String;Так;Статус;;active/completed/cancelled
+CRM;contracts;file_url;String;Ні;Файл договору;;
+CRM;contracts;created_at;DateTime;Так;Дата створення;;
+CRM;invoices;id;UUID;Так;Унікальний ідентифікатор;;
+CRM;invoices;number;String;Так;Номер рахунку;;
+CRM;invoices;date;Date;Так;Дата;;
+CRM;invoices;contract_id;UUID;Ні;Договір;contracts.id;
+CRM;invoices;client_id;UUID;Так;Клієнт;contractors.id;
+CRM;invoices;type;String;Так;Тип;;prepayment/final/partial
+CRM;invoices;currency_id;UUID;Так;Валюта;currencies.id;
+CRM;invoices;amount_excl_vat;Decimal;Так;Сума без ПДВ;;
+CRM;invoices;vat;Decimal;Так;ПДВ;;
+CRM;invoices;amount_incl_vat;Decimal;Так;Сума з ПДВ;;
+CRM;invoices;due_date;Date;Ні;Термін оплати;;
+CRM;invoices;paid_amount;Decimal;Так;Оплачено;;
+CRM;invoices;paid_date;Date;Ні;Дата оплати;;
+CRM;invoices;status;String;Так;Статус;;draft/sent/partial/paid/overdue
+CRM;invoices;created_at;DateTime;Так;Дата створення;;
