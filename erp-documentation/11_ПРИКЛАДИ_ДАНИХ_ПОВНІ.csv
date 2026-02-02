@@ -1,0 +1,175 @@
+Таблиця;ID;Поле1;Значення1;Поле2;Значення2;Поле3;Значення3;Поле4;Значення4;Поле5;Значення5;Поле6;Значення6
+=== ОДИНИЦІ ВИМІРУ (units) ===;;;;;;;;;;;;;;
+units;U001;code;шт;name;штука;type;quantity;is_base;true;;;;
+units;U002;code;кг;name;кілограм;type;weight;is_base;true;;;;
+units;U003;code;т;name;тонна;type;weight;is_base;false;;;;
+units;U004;code;м;name;метр;type;length;is_base;true;;;;
+units;U005;code;мм;name;міліметр;type;length;is_base;false;;;;
+units;U006;code;м²;name;метр квадратний;type;area;is_base;true;;;;
+units;U007;code;год;name;година;type;time;is_base;true;;;;
+units;U008;code;хв;name;хвилина;type;time;is_base;false;;;;
+units;U009;code;л;name;літр;type;volume;is_base;true;;;;
+units;U010;code;п.м.;name;погонний метр;type;length;is_base;false;;;;
+=== КОНВЕРТАЦІЯ ОДИНИЦЬ (unit_conversions) ===;;;;;;;;;;;;;;
+unit_conversions;UC001;from_unit_id;U003 (т);to_unit_id;U002 (кг);factor;1000;;;;;;
+unit_conversions;UC002;from_unit_id;U004 (м);to_unit_id;U005 (мм);factor;1000;;;;;;
+unit_conversions;UC003;from_unit_id;U007 (год);to_unit_id;U008 (хв);factor;60;;;;;;
+=== ВАЛЮТИ (currencies) ===;;;;;;;;;;;;;;
+currencies;CUR01;code;UAH;name;Гривня;symbol;₴;is_base;true;decimal_places;2;;
+currencies;CUR02;code;EUR;name;Євро;symbol;€;is_base;false;decimal_places;2;;
+currencies;CUR03;code;USD;name;Долар США;symbol;$;is_base;false;decimal_places;2;;
+=== КУРСИ ВАЛЮТ (currency_rates) ===;;;;;;;;;;;;;;
+currency_rates;CR001;currency_id;CUR02 (EUR);rate;43.50;rate_date;2024-01-15;source;НБУ;;;;
+currency_rates;CR002;currency_id;CUR03 (USD);rate;38.20;rate_date;2024-01-15;source;НБУ;;;;
+currency_rates;CR003;currency_id;CUR02 (EUR);rate;43.80;rate_date;2024-01-22;source;НБУ;;;;
+=== КРАЇНИ (countries) ===;;;;;;;;;;;;;;
+countries;CO001;code;UA;name;Україна;is_eu;false;;;;;;
+countries;CO002;code;DE;name;Німеччина;is_eu;true;;;;;;
+countries;CO003;code;PL;name;Польща;is_eu;true;;;;;;
+countries;CO004;code;TR;name;Туреччина;is_eu;false;;;;;;
+=== СТАВКИ ПДВ (vat_rates) ===;;;;;;;;;;;;;;
+vat_rates;VAT01;name;20%;rate;0.20;is_default;true;;;;;;
+vat_rates;VAT02;name;7%;rate;0.07;is_default;false;;;;;;
+vat_rates;VAT03;name;0% (експорт);rate;0.00;is_default;false;;;;;;
+vat_rates;VAT04;name;Без ПДВ;rate;0.00;is_default;false;;;;;;
+=== РОЛІ (roles) ===;;;;;;;;;;;;;;
+roles;R001;code;admin;name;Адміністратор;permissions;["*"];is_system;true;;;;
+roles;R002;code;director;name;Директор;permissions;["read:*","approve:*"];is_system;true;;;;
+roles;R003;code;manager;name;Менеджер;permissions;["read:*","write:crm","write:quotations"];is_system;false;;;;
+roles;R004;code;designer;name;Конструктор;permissions;["read:*","write:projects","write:items"];is_system;false;;;;
+roles;R005;code;technologist;name;Технолог;permissions;["read:*","write:routes","write:norms"];is_system;false;;;;
+roles;R006;code;storekeeper;name;Комірник;permissions;["read:materials","write:stock"];is_system;false;;;;
+roles;R007;code;foreman;name;Майстер;permissions;["read:orders","write:work_orders"];is_system;false;;;;
+=== ПІДРОЗДІЛИ - ДЕРЕВО (departments) ===;;;;;;;;;;;;;;
+departments;D001;code;MAIN;name;Підприємство;type;division;level;0;parent_id;null;path;D001
+departments;D002;code;PROD;name;Виробництво;type;division;level;1;parent_id;D001;path;D001/D002
+departments;D003;code;MECH;name;Механічний цех;type;workshop;level;2;parent_id;D002;path;D001/D002/D003
+departments;D004;code;TOK;name;Токарна дільниця;type;section;level;3;parent_id;D003;path;D001/D002/D003/D004
+departments;D005;code;FREZ;name;Фрезерна дільниця;type;section;level;3;parent_id;D003;path;D001/D002/D003/D005
+departments;D006;code;WELD;name;Зварювальний цех;type;workshop;level;2;parent_id;D002;path;D001/D002/D006
+departments;D007;code;ZAGOT;name;Заготівельна дільниця;type;section;level;3;parent_id;D006;path;D001/D002/D006/D007
+departments;D008;code;SVAR;name;Зварювальна дільниця;type;section;level;3;parent_id;D006;path;D001/D002/D006/D008
+departments;D009;code;ADM;name;Адміністрація;type;division;level;1;parent_id;D001;path;D001/D009
+departments;D010;code;KB;name;Конструкторський відділ;type;department;level;2;parent_id;D009;path;D001/D009/D010
+=== СКЛАДИ (warehouses) ===;;;;;;;;;;;;;;
+warehouses;WH01;code;WH-MAT;name;Склад матеріалів;type;materials;department_id;D002;is_default;true;;
+warehouses;WH02;code;WH-PURCH;name;Склад покупних;type;purchased;department_id;D002;is_default;true;;
+warehouses;WH03;code;WH-FIN;name;Склад готової продукції;type;finished;department_id;D002;is_default;true;;
+warehouses;WH04;code;WH-TOOL;name;Інструментальний склад;type;tools;department_id;D003;is_default;true;;
+=== ГРУПИ МАТЕРІАЛІВ - ДЕРЕВО (material_groups) ===;;;;;;;;;;;;;;
+material_groups;MG01;code;PROKAT;name;Прокат;level;0;parent_id;null;path;MG01;material_type;null;is_leaf;false;full_name;Прокат
+material_groups;MG02;code;LISTOVIJ;name;Листовий;level;1;parent_id;MG01;path;MG01/MG02;material_type;sheet;is_leaf;false;full_name;Прокат / Листовий
+material_groups;MG03;code;LIST-GK;name;Гарячекатаний;level;2;parent_id;MG02;path;MG01/MG02/MG03;material_type;sheet;is_leaf;true;full_name;Прокат / Листовий / Гарячекатаний
+material_groups;MG04;code;LIST-HK;name;Холоднокатаний;level;2;parent_id;MG02;path;MG01/MG02/MG04;material_type;sheet;is_leaf;true;full_name;Прокат / Листовий / Холоднокатаний
+material_groups;MG05;code;LIST-NERZ;name;Нержавіючий;level;2;parent_id;MG02;path;MG01/MG02/MG05;material_type;sheet;is_leaf;true;full_name;Прокат / Листовий / Нержавіючий
+material_groups;MG06;code;SORTOVIJ;name;Сортовий;level;1;parent_id;MG01;path;MG01/MG06;material_type;null;is_leaf;false;full_name;Прокат / Сортовий
+material_groups;MG07;code;KRUG;name;Круг;level;2;parent_id;MG06;path;MG01/MG06/MG07;material_type;round;is_leaf;true;full_name;Прокат / Сортовий / Круг
+material_groups;MG08;code;PROFILNIJ;name;Профільний;level;1;parent_id;MG01;path;MG01/MG08;material_type;null;is_leaf;false;full_name;Прокат / Профільний
+material_groups;MG09;code;TRUBA-KR;name;Труба кругла;level;2;parent_id;MG08;path;MG01/MG08/MG09;material_type;tube;is_leaf;true;full_name;Прокат / Профільний / Труба кругла
+material_groups;MG10;code;TRUBA-PROF;name;Труба профільна;level;2;parent_id;MG08;path;MG01/MG08/MG10;material_type;profile_tube;is_leaf;true;full_name;Прокат / Профільний / Труба профільна
+material_groups;MG11;code;KUTOK;name;Кутик;level;2;parent_id;MG08;path;MG01/MG08/MG11;material_type;angle;is_leaf;true;full_name;Прокат / Профільний / Кутик
+material_groups;MG12;code;KRIPLENNIA;name;Кріплення;level;0;parent_id;null;path;MG12;material_type;null;is_leaf;false;full_name;Кріплення
+material_groups;MG13;code;BOLTY;name;Болти;level;1;parent_id;MG12;path;MG12/MG13;material_type;fastener;is_leaf;true;full_name;Кріплення / Болти
+material_groups;MG14;code;GAJKY;name;Гайки;level;1;parent_id;MG12;path;MG12/MG14;material_type;fastener;is_leaf;true;full_name;Кріплення / Гайки
+=== МАРКИ МАТЕРІАЛІВ (material_grades) ===;;;;;;;;;;;;;;
+material_grades;GR01;code;Ст3кп;name;Сталь 3 киплячка;material_class;carbon_steel;density;7850;standard;ДСТУ 2651;;
+material_grades;GR02;code;Ст3пс;name;Сталь 3 напівспокійна;material_class;carbon_steel;density;7850;standard;ДСТУ 2651;;
+material_grades;GR03;code;09Г2С;name;Конструкційна низьколегована;material_class;alloy_steel;density;7850;standard;ГОСТ 19281;;
+material_grades;GR04;code;12Х18Н10Т;name;Нержавіюча;material_class;stainless;density;7900;standard;ГОСТ 5632;;
+material_grades;GR05;code;AISI 304;name;Stainless Steel 304;material_class;stainless;density;7930;standard;ASTM A240;;
+material_grades;GR06;code;Ст45;name;Сталь 45 конструкційна;material_class;carbon_steel;density;7850;standard;ГОСТ 1050;;
+=== ВЛАСТИВОСТІ МАТЕРІАЛІВ (material_properties) ===;;;;;;;;;;;;;;
+material_properties;MP01;grade_id;GR01 (Ст3кп);property_name;yield_strength;property_value;235;unit;МПа;;;;
+material_properties;MP02;grade_id;GR01 (Ст3кп);property_name;tensile_strength;property_value;360-460;unit;МПа;;;;
+material_properties;MP03;grade_id;GR01 (Ст3кп);property_name;weldability;property_value;good;unit;-;;;;
+material_properties;MP04;grade_id;GR03 (09Г2С);property_name;yield_strength;property_value;345;unit;МПа;;;;
+material_properties;MP05;grade_id;GR03 (09Г2С);property_name;tensile_strength;property_value;490;unit;МПа;;;;
+material_properties;MP06;grade_id;GR04 (12Х18Н10Т);property_name;corrosion_resistance;property_value;high;unit;-;;;;
+=== МАТЕРІАЛИ - СОРТАМЕНТ (materials) ===;;;;;;;;;;;;;;
+materials;M001;code;LIST-GK-3-1000-2000;name;Лист г/к 3×1000×2000 Ст3кп;group_id;MG03;grade_id;GR01;material_type;sheet;thickness;3;width;1000;length;2000;weight_per_unit;47.1;price;32.50;unit_id;U002
+materials;M002;code;LIST-GK-4-1250-2500;name;Лист г/к 4×1250×2500 Ст3кп;group_id;MG03;grade_id;GR01;material_type;sheet;thickness;4;width;1250;length;2500;weight_per_unit;98.13;price;31.80;unit_id;U002
+materials;M003;code;LIST-GK-5-1500-6000;name;Лист г/к 5×1500×6000 Ст3кп;group_id;MG03;grade_id;GR01;material_type;sheet;thickness;5;width;1500;length;6000;weight_per_unit;353.25;price;31.50;unit_id;U002
+materials;M004;code;LIST-GK-6-1500-6000;name;Лист г/к 6×1500×6000 Ст3кп;group_id;MG03;grade_id;GR01;material_type;sheet;thickness;6;width;1500;length;6000;weight_per_unit;423.9;price;31.20;unit_id;U002
+materials;M005;code;LIST-NERZ-2-1000-2000;name;Лист нерж. 2×1000×2000 AISI304;group_id;MG05;grade_id;GR05;material_type;sheet;thickness;2;width;1000;length;2000;weight_per_unit;31.72;price;185.00;unit_id;U002
+materials;M006;code;KRUG-20-ST3;name;Круг 20 Ст3;group_id;MG07;grade_id;GR01;material_type;round;diameter;20;weight_per_meter;2.47;price;35.00;unit_id;U002;;;;
+materials;M007;code;KRUG-30-ST45;name;Круг 30 Ст45;group_id;MG07;grade_id;GR06;material_type;round;diameter;30;weight_per_meter;5.55;price;42.00;unit_id;U002;;;;
+materials;M008;code;KRUG-50-ST45;name;Круг 50 Ст45;group_id;MG07;grade_id;GR06;material_type;round;diameter;50;weight_per_meter;15.42;price;40.00;unit_id;U002;;;;
+materials;M009;code;TRUBA-57x3.5;name;Труба 57×3.5;group_id;MG09;grade_id;GR01;material_type;tube;diameter;57;wall_thickness;3.5;weight_per_meter;4.62;price;48.00;unit_id;U002;;
+materials;M010;code;TRUBA-PROF-40x40x3;name;Труба проф. 40×40×3;group_id;MG10;grade_id;GR01;material_type;profile_tube;width;40;height;40;wall_thickness;3;weight_per_meter;3.36;price;52.00;unit_id;U002
+materials;M011;code;KUTOK-50x50x5;name;Кутик 50×50×5;group_id;MG11;grade_id;GR01;material_type;angle;leg_length;50;thickness;5;weight_per_meter;3.77;price;38.00;unit_id;U002;;
+materials;M012;code;BOLT-M10x30;name;Болт М10×30 кл.8.8;group_id;MG13;grade_id;null;material_type;fastener;price;3.50;unit_id;U001;;;;;;
+materials;M013;code;GAJKA-M10;name;Гайка М10 кл.8;group_id;MG14;grade_id;null;material_type;fastener;price;1.20;unit_id;U001;;;;;;
+=== ОБЛАДНАННЯ (equipment) ===;;;;;;;;;;;;;;
+equipment;EQ01;code;GN-6.3;name;Гільйотина НГ-6.3;department_id;D007;equipment_type;guillotine;max_thickness;6.3;max_length;3150;hourly_rate;350;status;active
+equipment;EQ02;code;GN-13;name;Гільйотина НГ-13;department_id;D007;equipment_type;guillotine;max_thickness;13;max_length;3150;hourly_rate;400;status;active
+equipment;EQ03;code;PLAZMA-1;name;Плазморіз Hypertherm 105;department_id;D007;equipment_type;plasma;max_thickness;25;hourly_rate;800;status;active;;
+equipment;EQ04;code;TOK-16K20;name;Токарний 16К20;department_id;D004;equipment_type;lathe;max_diameter;400;max_length;1000;hourly_rate;400;status;active
+equipment;EQ05;code;TOK-1M63;name;Токарний 1М63;department_id;D004;equipment_type;lathe;max_diameter;630;max_length;2800;hourly_rate;500;status;active
+equipment;EQ06;code;FREZ-6R82;name;Фрезерний 6Р82;department_id;D005;equipment_type;mill;max_length;800;max_width;320;hourly_rate;450;status;active
+equipment;EQ07;code;SVERD-2N135;name;Свердлильний 2Н135;department_id;D005;equipment_type;drill;max_diameter;35;hourly_rate;300;status;active;;
+equipment;EQ08;code;MIG-500;name;Зварювальний MIG 500A;department_id;D008;equipment_type;welder_mig;power_kw;18;hourly_rate;450;status;active;;
+equipment;EQ09;code;TIG-300;name;Зварювальний TIG 300A;department_id;D008;equipment_type;welder_tig;power_kw;12;hourly_rate;550;status;active;;
+equipment;EQ10;code;VERSTAK-1;name;Верстак слюсарний №1;department_id;D008;equipment_type;bench;hourly_rate;250;status;active;;;;
+=== ОПЕРАЦІЇ (operations) ===;;;;;;;;;;;;;;
+operations;OP005;code;005;name;Заготівельна (гільйотина);operation_group;cutting;is_external;false;;;;
+operations;OP006;code;006;name;Заготівельна (плазма);operation_group;cutting;is_external;false;;;;
+operations;OP010;code;010;name;Слюсарна;operation_group;assembly;is_external;false;;;;
+operations;OP015;code;015;name;Токарна;operation_group;machining;is_external;false;;;;
+operations;OP020;code;020;name;Фрезерна;operation_group;machining;is_external;false;;;;
+operations;OP025;code;025;name;Свердлильна;operation_group;machining;is_external;false;;;;
+operations;OP030;code;030;name;Шліфувальна;operation_group;machining;is_external;false;;;;
+operations;OP035;code;035;name;Зварювання MIG/MAG;operation_group;welding;is_external;false;;;;
+operations;OP040;code;040;name;Зварювання TIG;operation_group;welding;is_external;false;;;;
+operations;OP045;code;045;name;Термообробка;operation_group;heat_treatment;is_external;true;;;;
+operations;OP050;code;050;name;Гальванічне покриття;operation_group;coating;is_external;true;;;;
+operations;OP055;code;055;name;Фарбування;operation_group;painting;is_external;false;;;;
+operations;OP060;code;060;name;Контроль ВТК;operation_group;quality;is_external;false;;;;
+=== НОРМИ ЧАСУ (time_norms) ===;;;;;;;;;;;;;;
+time_norms;TN01;operation_id;OP005;equipment_id;EQ01 (ГН-6.3);thickness_from;0.5;thickness_to;3;setup_time;15;piece_time;2;time_unit;per_cut;;
+time_norms;TN02;operation_id;OP005;equipment_id;EQ01 (ГН-6.3);thickness_from;3;thickness_to;6;setup_time;15;piece_time;3;time_unit;per_cut;;
+time_norms;TN03;operation_id;OP005;equipment_id;EQ02 (ГН-13);thickness_from;6;thickness_to;13;setup_time;20;piece_time;4;time_unit;per_cut;;
+time_norms;TN04;operation_id;OP006;equipment_id;EQ03 (Плазма);thickness_from;1;thickness_to;10;setup_time;20;piece_time;0.5;time_unit;per_meter;;
+time_norms;TN05;operation_id;OP006;equipment_id;EQ03 (Плазма);thickness_from;10;thickness_to;25;setup_time;20;piece_time;0.8;time_unit;per_meter;;
+time_norms;TN06;operation_id;OP015;equipment_id;EQ04 (16К20);diameter_from;10;diameter_to;100;setup_time;20;piece_time;0.15;time_unit;per_piece;;
+time_norms;TN07;operation_id;OP025;equipment_id;EQ07 (2Н135);diameter_from;5;diameter_to;20;setup_time;10;piece_time;1.5;time_unit;per_piece;;
+time_norms;TN08;operation_id;OP035;equipment_id;EQ08 (MIG-500);setup_time;15;piece_time;1.2;time_unit;per_meter;;;;;;
+time_norms;TN09;operation_id;OP040;equipment_id;EQ09 (TIG-300);setup_time;20;piece_time;2.5;time_unit;per_meter;;;;;;
+=== РОЗХІДНІ МАТЕРІАЛИ (consumables) ===;;;;;;;;;;;;;;
+consumables;CON01;code;DRIT-08G2S-1.0;name;Дріт зварювальний 08Г2С ∅1.0;category;welding_wire;unit_id;U002;price;85;;;;
+consumables;CON02;code;DRIT-08G2S-1.2;name;Дріт зварювальний 08Г2С ∅1.2;category;welding_wire;unit_id;U002;price;82;;;;
+consumables;CON03;code;DRIT-316L-1.0;name;Дріт нерж. 316L ∅1.0;category;welding_wire;unit_id;U002;price;450;;;;
+consumables;CON04;code;GAZ-CO2;name;Вуглекислота CO2;category;gas;unit_id;U009;price;0.05;;;;
+consumables;CON05;code;GAZ-ARGON;name;Аргон;category;gas;unit_id;U009;price;0.15;;;;
+consumables;CON06;code;SOJ-EMULSIA;name;СОЖ (емульсія 5%);category;coolant;unit_id;U009;price;45;;;;
+consumables;CON07;code;FARBA-PF115;name;Емаль ПФ-115;category;paint;unit_id;U002;price;95;;;;
+consumables;CON08;code;GRUNT-GF021;name;Грунт ГФ-021;category;paint;unit_id;U002;price;78;;;;
+=== ВИТРАТИ РОЗХІДНИКІВ НА ОПЕРАЦІЇ (operation_consumables) ===;;;;;;;;;;;;;;
+operation_consumables;OC01;operation_id;OP035 (MIG);consumable_id;CON01 (Дріт 1.0);consumption_rate;0.12;rate_type;per_meter;;;;
+operation_consumables;OC02;operation_id;OP035 (MIG);consumable_id;CON04 (CO2);consumption_rate;15;rate_type;per_hour;;;;
+operation_consumables;OC03;operation_id;OP040 (TIG);consumable_id;CON03 (Дріт нерж);consumption_rate;0.08;rate_type;per_meter;;;;
+operation_consumables;OC04;operation_id;OP040 (TIG);consumable_id;CON05 (Аргон);consumption_rate;12;rate_type;per_hour;;;;
+operation_consumables;OC05;operation_id;OP015 (Токарна);consumable_id;CON06 (СОЖ);consumption_rate;0.5;rate_type;per_hour;;;;
+operation_consumables;OC06;operation_id;OP055 (Фарбування);consumable_id;CON07 (Фарба);consumption_rate;0.15;rate_type;per_sqm;;;;
+operation_consumables;OC07;operation_id;OP055 (Фарбування);consumable_id;CON08 (Грунт);consumption_rate;0.12;rate_type;per_sqm;;;;
+=== КОЕФІЦІЄНТИ ПАРТІЙНОСТІ (batch_coefficients) ===;;;;;;;;;;;;;;
+batch_coefficients;BC01;operation_group;null (всі);quantity_from;1;quantity_to;5;coefficient;1.00;;;;
+batch_coefficients;BC02;operation_group;null (всі);quantity_from;6;quantity_to;10;coefficient;0.90;;;;
+batch_coefficients;BC03;operation_group;null (всі);quantity_from;11;quantity_to;25;coefficient;0.80;;;;
+batch_coefficients;BC04;operation_group;null (всі);quantity_from;26;quantity_to;50;coefficient;0.70;;;;
+batch_coefficients;BC05;operation_group;null (всі);quantity_from;51;quantity_to;100;coefficient;0.65;;;;
+batch_coefficients;BC06;operation_group;null (всі);quantity_from;101;quantity_to;999999;coefficient;0.60;;;;
+=== НАКЛАДНІ ВИТРАТИ (overhead_rates) ===;;;;;;;;;;;;;;
+overhead_rates;OH01;code;ZVV;name;Загальновиробничі витрати;rate;1.50;rate_type;percent;base;labor;calculation_order;1;;
+overhead_rates;OH02;code;DOD_ZP;name;Додаткова зарплата;rate;0.12;rate_type;percent;base;labor;calculation_order;2;;
+overhead_rates;OH03;code;ESV;name;ЄСВ;rate;0.22;rate_type;percent;base;labor_full;calculation_order;3;;
+overhead_rates;OH04;code;ADM;name;Адміністративні витрати;rate;0.10;rate_type;percent;base;production_cost;calculation_order;4;;
+overhead_rates;OH05;code;ZBUT;name;Витрати на збут;rate;0.05;rate_type;percent;base;production_cost;calculation_order;5;;
+=== КОНТРАГЕНТИ (contractors) ===;;;;;;;;;;;;;;
+contractors;C001;code;KL-001;name;ТОВ "Промтех";type;client;edrpou;12345678;is_vat_payer;true;country_id;CO001;currency_id;CUR01;phone;+380441234567;email;info@promtech.ua
+contractors;C002;code;KL-002;name;ПП "Агромаш";type;client;edrpou;87654321;is_vat_payer;true;country_id;CO001;currency_id;CUR01;phone;+380501234567;email;agro@gmail.com
+contractors;C003;code;KL-003;name;Schmidt GmbH;type;client;edrpou;DE123456;is_vat_payer;true;country_id;CO002;currency_id;CUR02;incoterms;DAP;email;info@schmidt.de
+contractors;C004;code;POST-001;name;ТОВ "Метінвест-СМЦ";type;supplier;edrpou;32165487;is_vat_payer;true;country_id;CO001;currency_id;CUR01;lead_time_days;5;min_order_amount;10000
+contractors;C005;code;POST-002;name;ТОВ "Сталь-Прокат";type;supplier;edrpou;65412378;is_vat_payer;true;country_id;CO001;currency_id;CUR01;lead_time_days;3;min_order_amount;5000
+contractors;C006;code;POST-003;name;Bohler Welding;type;supplier;edrpou;AT987654;is_vat_payer;false;country_id;CO002;currency_id;CUR02;lead_time_days;14;payment_terms;передоплата 100%
+contractors;C007;code;PIDR-001;name;ТОВ "ТермоСервіс";type;subcontractor;edrpou;45678912;is_vat_payer;true;country_id;CO001;currency_id;CUR01;services;["термообробка","цементація"];;
+contractors;C008;code;PIDR-002;name;ТОВ "Гальваніка";type;subcontractor;edrpou;78912345;is_vat_payer;true;country_id;CO001;currency_id;CUR01;services;["цинкування","хромування"];;

@@ -1,0 +1,481 @@
+Рівень;Таблиця;Поле;Тип;NULL;За замовч.;Опис;FK до;Індекс
+=== РІВЕНЬ 0: СИСТЕМНІ ТАБЛИЦІ ===;;;;;;;;
+0;settings;id;UUID;NO;;Унікальний ID;;PK
+0;settings;key;VARCHAR(100);NO;;Ключ налаштування;;UNIQUE
+0;settings;value;TEXT;YES;;Значення;;
+0;settings;type;VARCHAR(20);NO;string;Тип: string/number/boolean/json;;
+0;settings;description;TEXT;YES;;Опис налаштування;;
+0;settings;updated_at;TIMESTAMP;NO;NOW();;;
+0;settings;updated_by;UUID;YES;;Хто змінив;users.id;
+;;;;;;;;
+0;numbering_sequences;id;UUID;NO;;Унікальний ID;;PK
+0;numbering_sequences;code;VARCHAR(50);NO;;Код послідовності (КП, ВЗ, ...);;UNIQUE
+0;numbering_sequences;prefix;VARCHAR(20);YES;;Префікс (КП-);;
+0;numbering_sequences;suffix;VARCHAR(20);YES;;Суфікс;;
+0;numbering_sequences;year_format;VARCHAR(10);YES;YYYY;Формат року в номері;;
+0;numbering_sequences;separator;VARCHAR(5);YES;-;Розділювач;;
+0;numbering_sequences;current_number;INT;NO;0;Поточний номер;;
+0;numbering_sequences;padding;INT;NO;4;Кількість цифр (0001);;
+0;numbering_sequences;reset_yearly;BOOLEAN;NO;true;Скидати щороку;;
+;;;;;;;;
+0;calculation_formulas;id;UUID;NO;;Унікальний ID;;PK
+0;calculation_formulas;code;VARCHAR(50);NO;;Код формули;;UNIQUE
+0;calculation_formulas;name;VARCHAR(200);NO;;Назва;;
+0;calculation_formulas;formula;TEXT;NO;;Формула;;
+0;calculation_formulas;variables;JSON;YES;;Список змінних;;
+0;calculation_formulas;result_unit;VARCHAR(20);YES;;Одиниця результату;;
+0;calculation_formulas;description;TEXT;YES;;Опис;;
+;;;;;;;;
+0;document_templates;id;UUID;NO;;Унікальний ID;;PK
+0;document_templates;code;VARCHAR(50);NO;;Код шаблону;;UNIQUE
+0;document_templates;name;VARCHAR(200);NO;;Назва;;
+0;document_templates;type;VARCHAR(50);NO;;Тип: quotation/invoice/route_card;;
+0;document_templates;format;VARCHAR(20);NO;pdf;Формат: pdf/docx/xlsx;;
+0;document_templates;template_url;TEXT;YES;;URL файлу шаблону;;
+0;document_templates;is_default;BOOLEAN;NO;false;За замовчуванням;;
+0;document_templates;is_active;BOOLEAN;NO;true;Активний;;
+=== РІВЕНЬ 1: БАЗОВІ ДОВІДНИКИ ===;;;;;;;;
+1;units;id;UUID;NO;;Унікальний ID;;PK
+1;units;code;VARCHAR(20);NO;;Код одиниці (шт, кг, м);;UNIQUE
+1;units;name;VARCHAR(100);NO;;Повна назва;;
+1;units;name_short;VARCHAR(50);YES;;Скорочена назва;;
+1;units;type;VARCHAR(30);NO;;Тип: quantity/weight/length/area/volume/time;;INDEX
+1;units;is_base;BOOLEAN;NO;false;Базова одиниця для типу;;
+1;units;sort_order;INT;NO;0;Порядок сортування;;
+1;units;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+1;unit_conversions;id;UUID;NO;;Унікальний ID;;PK
+1;unit_conversions;from_unit_id;UUID;NO;;Від якої одиниці;units.id;INDEX
+1;unit_conversions;to_unit_id;UUID;NO;;До якої одиниці;units.id;INDEX
+1;unit_conversions;factor;DECIMAL(18,8);NO;;Коефіцієнт конвертації;;
+1;unit_conversions;formula;TEXT;YES;;Формула (якщо не лінійна);;
+;;;;;;;;
+1;currencies;id;UUID;NO;;Унікальний ID;;PK
+1;currencies;code;VARCHAR(3);NO;;Код валюти ISO 4217;;UNIQUE
+1;currencies;name;VARCHAR(100);NO;;Назва;;
+1;currencies;symbol;VARCHAR(5);NO;;Символ (₴, €, $);;
+1;currencies;is_base;BOOLEAN;NO;false;Базова валюта системи;;
+1;currencies;decimal_places;INT;NO;2;Знаків після коми;;
+1;currencies;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+1;currency_rates;id;UUID;NO;;Унікальний ID;;PK
+1;currency_rates;currency_id;UUID;NO;;Валюта;currencies.id;INDEX
+1;currency_rates;rate;DECIMAL(18,6);NO;;Курс до базової валюти;;
+1;currency_rates;rate_date;DATE;NO;;Дата курсу;;INDEX
+1;currency_rates;source;VARCHAR(50);YES;;Джерело (НБУ, manual);;
+1;currency_rates;created_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+1;countries;id;UUID;NO;;Унікальний ID;;PK
+1;countries;code;VARCHAR(2);NO;;Код ISO 3166-1 alpha-2;;UNIQUE
+1;countries;code3;VARCHAR(3);YES;;Код ISO 3166-1 alpha-3;;
+1;countries;name;VARCHAR(100);NO;;Назва;;
+1;countries;name_en;VARCHAR(100);YES;;Назва англійською;;
+1;countries;is_eu;BOOLEAN;NO;false;Країна ЄС;;
+1;countries;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+1;vat_rates;id;UUID;NO;;Унікальний ID;;PK
+1;vat_rates;name;VARCHAR(100);NO;;Назва (20%, Без ПДВ);;
+1;vat_rates;rate;DECIMAL(5,2);NO;;Ставка (0.20, 0.07, 0);;
+1;vat_rates;code;VARCHAR(20);YES;;Код для звітності;;
+1;vat_rates;is_default;BOOLEAN;NO;false;За замовчуванням;;
+1;vat_rates;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+1;roles;id;UUID;NO;;Унікальний ID;;PK
+1;roles;code;VARCHAR(50);NO;;Код ролі;;UNIQUE
+1;roles;name;VARCHAR(100);NO;;Назва ролі;;
+1;roles;description;TEXT;YES;;Опис;;
+1;roles;permissions;JSON;NO;[];Масив дозволів;;
+1;roles;is_system;BOOLEAN;NO;false;Системна (не можна видалити);;
+1;roles;is_active;BOOLEAN;NO;true;Активна;;
+=== РІВЕНЬ 2: КОРИСТУВАЧІ ТА СТРУКТУРА ===;;;;;;;;
+2;users;id;UUID;NO;;Унікальний ID;;PK
+2;users;email;VARCHAR(255);NO;;Email (логін);;UNIQUE
+2;users;password_hash;VARCHAR(255);NO;;Хеш пароля;;
+2;users;first_name;VARCHAR(100);NO;;Ім'я;;
+2;users;last_name;VARCHAR(100);NO;;Прізвище;;
+2;users;middle_name;VARCHAR(100);YES;;По батькові;;
+2;users;phone;VARCHAR(50);YES;;Телефон;;
+2;users;position;VARCHAR(200);YES;;Посада;;
+2;users;role_id;UUID;NO;;Роль;roles.id;INDEX
+2;users;department_id;UUID;YES;;Підрозділ;departments.id;INDEX
+2;users;avatar_url;TEXT;YES;;URL фото;;
+2;users;timezone;VARCHAR(50);NO;Europe/Kyiv;Часовий пояс;;
+2;users;locale;VARCHAR(10);NO;uk;Мова інтерфейсу;;
+2;users;is_active;BOOLEAN;NO;true;Активний;;
+2;users;last_login_at;TIMESTAMP;YES;;Останній вхід;;
+2;users;created_at;TIMESTAMP;NO;NOW();;;
+2;users;updated_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+2;departments;id;UUID;NO;;Унікальний ID;;PK
+2;departments;parent_id;UUID;YES;;Батьківський підрозділ;departments.id;INDEX
+2;departments;code;VARCHAR(50);NO;;Код підрозділу;;UNIQUE
+2;departments;name;VARCHAR(200);NO;;Назва;;
+2;departments;full_name;VARCHAR(500);YES;;Повний шлях назви;;
+2;departments;type;VARCHAR(30);NO;;Тип: division/workshop/section/team/department;;INDEX
+2;departments;level;INT;NO;0;Рівень вкладеності;;INDEX
+2;departments;path;VARCHAR(500);YES;;Шлях ID: 1/5/12;;INDEX
+2;departments;head_id;UUID;YES;;Керівник;users.id;
+2;departments;work_hours_per_shift;DECIMAL(4,2);NO;8;Годин на зміну;;
+2;departments;shifts_count;INT;NO;1;Кількість змін;;
+2;departments;work_days_per_week;INT;NO;5;Робочих днів на тиждень;;
+2;departments;sort_order;INT;NO;0;Порядок сортування;;
+2;departments;is_production;BOOLEAN;NO;false;Виробничий підрозділ;;
+2;departments;is_active;BOOLEAN;NO;true;Активний;;
+;;;;;;;;
+2;warehouses;id;UUID;NO;;Унікальний ID;;PK
+2;warehouses;code;VARCHAR(50);NO;;Код складу;;UNIQUE
+2;warehouses;name;VARCHAR(200);NO;;Назва;;
+2;warehouses;type;VARCHAR(30);NO;;Тип: materials/purchased/finished/tools/wip;;INDEX
+2;warehouses;department_id;UUID;YES;;Підрозділ;departments.id;INDEX
+2;warehouses;responsible_id;UUID;YES;;Відповідальний;users.id;
+2;warehouses;address;TEXT;YES;;Адреса;;
+2;warehouses;is_default;BOOLEAN;NO;false;За замовчуванням для типу;;
+2;warehouses;is_active;BOOLEAN;NO;true;Активний;;
+=== РІВЕНЬ 2: ДОВІДНИКИ МАТЕРІАЛІВ ===;;;;;;;;
+2;material_groups;id;UUID;NO;;Унікальний ID;;PK
+2;material_groups;parent_id;UUID;YES;;Батьківська група;material_groups.id;INDEX
+2;material_groups;code;VARCHAR(50);NO;;Код групи;;UNIQUE
+2;material_groups;name;VARCHAR(200);NO;;Назва;;
+2;material_groups;full_name;VARCHAR(500);YES;;Повний шлях назви;;
+2;material_groups;level;INT;NO;0;Рівень вкладеності;;INDEX
+2;material_groups;path;VARCHAR(500);YES;;Шлях ID;;INDEX
+2;material_groups;material_type;VARCHAR(30);YES;;Тип: sheet/round/tube/profile/angle/channel/fastener/consumable;;INDEX
+2;material_groups;is_leaf;BOOLEAN;NO;true;Можна призначати матеріали;;
+2;material_groups;sort_order;INT;NO;0;Порядок;;
+2;material_groups;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+2;material_grades;id;UUID;NO;;Унікальний ID;;PK
+2;material_grades;code;VARCHAR(50);NO;;Код марки;;UNIQUE
+2;material_grades;name;VARCHAR(200);NO;;Назва марки;;
+2;material_grades;standard;VARCHAR(100);YES;;Стандарт (ДСТУ, ГОСТ, DIN);;
+2;material_grades;material_class;VARCHAR(30);NO;;Клас: carbon_steel/alloy_steel/stainless/aluminum/copper/plastic;;INDEX
+2;material_grades;density;DECIMAL(10,2);NO;;Густина кг/м³;;
+2;material_grades;description;TEXT;YES;;Опис, застосування;;
+2;material_grades;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+2;material_properties;id;UUID;NO;;Унікальний ID;;PK
+2;material_properties;grade_id;UUID;NO;;Марка матеріалу;material_grades.id;INDEX
+2;material_properties;property_name;VARCHAR(100);NO;;Назва властивості;;INDEX
+2;material_properties;property_value;VARCHAR(200);NO;;Значення;;
+2;material_properties;unit;VARCHAR(50);YES;;Одиниця виміру;;
+2;material_properties;min_value;DECIMAL(18,4);YES;;Мінімум (для діапазону);;
+2;material_properties;max_value;DECIMAL(18,4);YES;;Максимум (для діапазону);;
+2;material_properties;notes;TEXT;YES;;Примітки;;
+=== РІВЕНЬ 3: МАТЕРІАЛИ ===;;;;;;;;
+3;materials;id;UUID;NO;;Унікальний ID;;PK
+3;materials;code;VARCHAR(100);NO;;Артикул;;UNIQUE
+3;materials;name;VARCHAR(500);NO;;Найменування;;INDEX
+3;materials;name_short;VARCHAR(200);YES;;Коротка назва;;
+3;materials;group_id;UUID;NO;;Група;material_groups.id;INDEX
+3;materials;grade_id;UUID;YES;;Марка;material_grades.id;INDEX
+3;materials;unit_id;UUID;NO;;Одиниця виміру;units.id;
+3;materials;material_type;VARCHAR(30);NO;;Тип: sheet/round/tube/profile_tube/angle/channel/beam/strip/wire/fastener/other;;INDEX
+3;materials;-- РОЗМІРИ (залежать від типу) --;;;;;;;;
+3;materials;thickness;DECIMAL(10,3);YES;;Товщина мм (лист, стрічка);;
+3;materials;width;DECIMAL(10,2);YES;;Ширина мм (лист, стрічка, смуга);;
+3;materials;length;DECIMAL(10,2);YES;;Довжина мм (лист, прокат);;
+3;materials;diameter;DECIMAL(10,3);YES;;Діаметр мм (круг, труба зовн.);;
+3;materials;inner_diameter;DECIMAL(10,3);YES;;Внутрішній діаметр мм (труба);;
+3;materials;wall_thickness;DECIMAL(10,3);YES;;Товщина стінки мм (труба);;
+3;materials;height;DECIMAL(10,2);YES;;Висота мм (профіль, швелер);;
+3;materials;flange_width;DECIMAL(10,2);YES;;Ширина полки мм (швелер, двотавр);;
+3;materials;flange_thickness;DECIMAL(10,3);YES;;Товщина полки мм;;
+3;materials;web_thickness;DECIMAL(10,3);YES;;Товщина стінки мм (швелер);;
+3;materials;leg_length;DECIMAL(10,2);YES;;Сторона кутика мм;;
+3;materials;-- ВАГОВІ ХАРАКТЕРИСТИКИ --;;;;;;;;
+3;materials;weight_per_unit;DECIMAL(18,6);YES;;Вага одиниці кг;;
+3;materials;weight_per_meter;DECIMAL(18,6);YES;;Вага п.м. кг/м;;
+3;materials;weight_per_sqm;DECIMAL(18,6);YES;;Вага м² кг/м²;;
+3;materials;-- ЦІНА ТА ПОСТАЧАННЯ --;;;;;;;;
+3;materials;price;DECIMAL(18,4);YES;;Ціна за одиницю;;
+3;materials;currency_id;UUID;YES;;Валюта ціни;currencies.id;
+3;materials;price_date;DATE;YES;;Дата актуальності ціни;;
+3;materials;price_includes_vat;BOOLEAN;NO;false;Ціна з ПДВ;;
+3;materials;supplier_id;UUID;YES;;Основний постачальник;contractors.id;INDEX
+3;materials;supplier_code;VARCHAR(100);YES;;Код у постачальника;;
+3;materials;lead_time_days;INT;YES;;Термін поставки днів;;
+3;materials;min_order_qty;DECIMAL(18,4);YES;;Мін. партія замовлення;;
+3;materials;-- ТЕХНОЛОГІЧНІ --;;;;;;;;
+3;materials;cutting_allowance;DECIMAL(10,2);YES;3;Припуск на різ мм;;
+3;materials;waste_percent;DECIMAL(5,2);YES;0;% технолог. відходів;;
+3;materials;-- СКЛАДСЬКІ --;;;;;;;;
+3;materials;min_stock;DECIMAL(18,4);YES;;Мін. запас;;
+3;materials;max_stock;DECIMAL(18,4);YES;;Макс. запас;;
+3;materials;reorder_point;DECIMAL(18,4);YES;;Точка замовлення;;
+3;materials;default_warehouse_id;UUID;YES;;Склад за замовч.;warehouses.id;
+3;materials;-- СЛУЖБОВІ --;;;;;;;;
+3;materials;notes;TEXT;YES;;Примітки;;
+3;materials;is_active;BOOLEAN;NO;true;Активний;;
+3;materials;created_at;TIMESTAMP;NO;NOW();;;
+3;materials;updated_at;TIMESTAMP;NO;NOW();;;
+3;materials;created_by;UUID;YES;;;users.id;
+;;;;;;;;
+3;material_prices_history;id;UUID;NO;;Унікальний ID;;PK
+3;material_prices_history;material_id;UUID;NO;;Матеріал;materials.id;INDEX
+3;material_prices_history;price;DECIMAL(18,4);NO;;Ціна;;
+3;material_prices_history;currency_id;UUID;NO;;Валюта;currencies.id;
+3;material_prices_history;price_includes_vat;BOOLEAN;NO;false;З ПДВ;;
+3;material_prices_history;valid_from;DATE;NO;;Діє з;;INDEX
+3;material_prices_history;valid_to;DATE;YES;;Діє до;;
+3;material_prices_history;supplier_id;UUID;YES;;Постачальник;contractors.id;
+3;material_prices_history;source;VARCHAR(100);YES;;Джерело (прайс, договір);;
+3;material_prices_history;created_at;TIMESTAMP;NO;NOW();;;
+3;material_prices_history;created_by;UUID;YES;;;users.id;
+=== РІВЕНЬ 3: ОБЛАДНАННЯ ===;;;;;;;;
+3;equipment;id;UUID;NO;;Унікальний ID;;PK
+3;equipment;code;VARCHAR(50);NO;;Інвентарний номер;;UNIQUE
+3;equipment;name;VARCHAR(200);NO;;Назва;;INDEX
+3;equipment;department_id;UUID;NO;;Дільниця;departments.id;INDEX
+3;equipment;equipment_type;VARCHAR(50);NO;;Тип: guillotine/plasma/laser/lathe/mill/drill/grinder/welder_mig/welder_tig/welder_mma/press/roller/bench/other;;INDEX
+3;equipment;-- ТЕХНІЧНІ ПАРАМЕТРИ --;;;;;;;;
+3;equipment;max_length;DECIMAL(10,2);YES;;Макс. довжина обробки мм;;
+3;equipment;max_width;DECIMAL(10,2);YES;;Макс. ширина мм;;
+3;equipment;max_thickness;DECIMAL(10,2);YES;;Макс. товщина мм;;
+3;equipment;max_diameter;DECIMAL(10,2);YES;;Макс. діаметр мм;;
+3;equipment;max_weight;DECIMAL(10,2);YES;;Макс. вага заготовки кг;;
+3;equipment;power_kw;DECIMAL(10,2);YES;;Потужність кВт;;
+3;equipment;accuracy_class;VARCHAR(20);YES;;Клас точності;;
+3;equipment;-- ЕКОНОМІЧНІ --;;;;;;;;
+3;equipment;hourly_rate;DECIMAL(18,4);NO;;Тариф грн/год;;
+3;equipment;setup_rate;DECIMAL(18,4);YES;;Тариф налагодження грн/год;;
+3;equipment;energy_cost_per_hour;DECIMAL(18,4);YES;;Вартість енергії грн/год;;
+3;equipment;depreciation_per_hour;DECIMAL(18,4);YES;;Амортизація грн/год;;
+3;equipment;-- СТАТУС --;;;;;;;;
+3;equipment;status;VARCHAR(20);NO;active;Статус: active/repair/maintenance/reserve/decommissioned;;INDEX
+3;equipment;manufacturer;VARCHAR(200);YES;;Виробник;;
+3;equipment;model;VARCHAR(200);YES;;Модель;;
+3;equipment;year_manufactured;INT;YES;;Рік випуску;;
+3;equipment;year_installed;INT;YES;;Рік введення;;
+3;equipment;next_maintenance_date;DATE;YES;;Наступне ТО;;
+3;equipment;notes;TEXT;YES;;Примітки;;
+3;equipment;is_active;BOOLEAN;NO;true;Активне;;
+;;;;;;;;
+3;equipment_modes;id;UUID;NO;;Унікальний ID;;PK
+3;equipment_modes;equipment_id;UUID;NO;;Обладнання;equipment.id;INDEX
+3;equipment_modes;mode_name;VARCHAR(100);NO;;Назва режиму;;
+3;equipment_modes;parameter_name;VARCHAR(100);NO;;Параметр;;
+3;equipment_modes;min_value;DECIMAL(18,4);YES;;Мінімум;;
+3;equipment_modes;max_value;DECIMAL(18,4);YES;;Максимум;;
+3;equipment_modes;default_value;DECIMAL(18,4);YES;;За замовчуванням;;
+3;equipment_modes;unit;VARCHAR(50);YES;;Одиниця виміру;;
+=== РІВЕНЬ 3: ОПЕРАЦІЇ ===;;;;;;;;
+3;operations;id;UUID;NO;;Унікальний ID;;PK
+3;operations;code;VARCHAR(20);NO;;Код операції (005, 010);;UNIQUE
+3;operations;name;VARCHAR(200);NO;;Назва;;INDEX
+3;operations;operation_group;VARCHAR(50);NO;;Група: cutting/machining/welding/assembly/painting/heat_treatment/quality/other;;INDEX
+3;operations;description;TEXT;YES;;Опис;;
+3;operations;default_skill_level;INT;NO;3;Розряд за замовч.;;
+3;operations;is_external;BOOLEAN;NO;false;Виконується на кооперації;;
+3;operations;sort_order;INT;NO;0;Порядок;;
+3;operations;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+3;operation_equipment;id;UUID;NO;;Унікальний ID;;PK
+3;operation_equipment;operation_id;UUID;NO;;Операція;operations.id;INDEX
+3;operation_equipment;equipment_id;UUID;NO;;Обладнання;equipment.id;INDEX
+3;operation_equipment;is_default;BOOLEAN;NO;false;За замовчуванням;;
+3;operation_equipment;priority;INT;NO;0;Пріоритет вибору;;
+=== РІВЕНЬ 3: КОНТРАГЕНТИ ===;;;;;;;;
+3;contractors;id;UUID;NO;;Унікальний ID;;PK
+3;contractors;code;VARCHAR(50);YES;;Внутрішній код;;UNIQUE
+3;contractors;type;VARCHAR(20);NO;;Тип: client/supplier/subcontractor;;INDEX
+3;contractors;name;VARCHAR(300);NO;;Назва;;INDEX
+3;contractors;full_name;VARCHAR(500);YES;;Повна назва;;
+3;contractors;-- РЕКВІЗИТИ --;;;;;;;;
+3;contractors;edrpou;VARCHAR(10);YES;;Код ЄДРПОУ;;INDEX
+3;contractors;ipn;VARCHAR(12);YES;;ІПН;;INDEX
+3;contractors;is_vat_payer;BOOLEAN;NO;true;Платник ПДВ;;
+3;contractors;vat_certificate;VARCHAR(50);YES;;№ свідоцтва ПДВ;;
+3;contractors;tax_system;VARCHAR(30);YES;;Система оподаткування: general/simplified/single_tax;;
+3;contractors;-- АДРЕСИ --;;;;;;;;
+3;contractors;legal_address;TEXT;YES;;Юридична адреса;;
+3;contractors;actual_address;TEXT;YES;;Фактична адреса;;
+3;contractors;postal_code;VARCHAR(10);YES;;Поштовий індекс;;
+3;contractors;country_id;UUID;YES;;Країна;countries.id;INDEX
+3;contractors;-- КОНТАКТИ --;;;;;;;;
+3;contractors;phone;VARCHAR(100);YES;;Телефон;;
+3;contractors;email;VARCHAR(255);YES;;Email;;
+3;contractors;website;VARCHAR(255);YES;;Веб-сайт;;
+3;contractors;-- БАНКІВСЬКІ --;;;;;;;;
+3;contractors;bank_name;VARCHAR(200);YES;;Назва банку;;
+3;contractors;bank_mfo;VARCHAR(6);YES;;МФО;;
+3;contractors;bank_account;VARCHAR(34);YES;;IBAN;;
+3;contractors;bank_swift;VARCHAR(11);YES;;SWIFT (для валюти);;
+3;contractors;-- УМОВИ --;;;;;;;;
+3;contractors;currency_id;UUID;YES;;Валюта розрахунків;currencies.id;
+3;contractors;payment_terms;VARCHAR(200);YES;;Умови оплати;;
+3;contractors;payment_days;INT;YES;;Днів відстрочки;;
+3;contractors;credit_limit;DECIMAL(18,4);YES;;Кредитний ліміт;;
+3;contractors;delivery_terms;VARCHAR(200);YES;;Умови доставки;;
+3;contractors;incoterms;VARCHAR(10);YES;;Incoterms (EXW, FCA, DAP);;
+3;contractors;-- ДЛЯ ПОСТАЧАЛЬНИКІВ --;;;;;;;;
+3;contractors;lead_time_days;INT;YES;;Типовий термін поставки;;
+3;contractors;min_order_amount;DECIMAL(18,4);YES;;Мін. сума замовлення;;
+3;contractors;rating;INT;YES;;Рейтинг 1-5;;
+3;contractors;-- ДЛЯ ПІДРЯДНИКІВ --;;;;;;;;
+3;contractors;services;TEXT;YES;;Перелік послуг (JSON);;
+3;contractors;-- СЛУЖБОВІ --;;;;;;;;
+3;contractors;manager_id;UUID;YES;;Відповідальний менеджер;users.id;
+3;contractors;notes;TEXT;YES;;Примітки;;
+3;contractors;is_active;BOOLEAN;NO;true;Активний;;
+3;contractors;created_at;TIMESTAMP;NO;NOW();;;
+3;contractors;updated_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+3;contractor_contacts;id;UUID;NO;;Унікальний ID;;PK
+3;contractor_contacts;contractor_id;UUID;NO;;Контрагент;contractors.id;INDEX
+3;contractor_contacts;first_name;VARCHAR(100);NO;;Ім'я;;
+3;contractor_contacts;last_name;VARCHAR(100);YES;;Прізвище;;
+3;contractor_contacts;position;VARCHAR(200);YES;;Посада;;
+3;contractor_contacts;phone;VARCHAR(100);YES;;Телефон;;
+3;contractor_contacts;mobile;VARCHAR(100);YES;;Мобільний;;
+3;contractor_contacts;email;VARCHAR(255);YES;;Email;;
+3;contractor_contacts;is_primary;BOOLEAN;NO;false;Основний контакт;;
+3;contractor_contacts;notes;TEXT;YES;;Примітки;;
+3;contractor_contacts;is_active;BOOLEAN;NO;true;Активний;;
+=== РІВЕНЬ 4: НОРМАТИВИ ===;;;;;;;;
+4;time_norms;id;UUID;NO;;Унікальний ID;;PK
+4;time_norms;operation_id;UUID;NO;;Операція;operations.id;INDEX
+4;time_norms;equipment_id;UUID;NO;;Обладнання;equipment.id;INDEX
+4;time_norms;material_group_id;UUID;YES;;Група матеріалу (для диференціації);material_groups.id;
+4;time_norms;material_class;VARCHAR(30);YES;;Клас матеріалу;;
+4;time_norms;-- ДІАПАЗОН ПАРАМЕТРІВ --;;;;;;;;
+4;time_norms;thickness_from;DECIMAL(10,3);YES;;Товщина від мм;;
+4;time_norms;thickness_to;DECIMAL(10,3);YES;;Товщина до мм;;
+4;time_norms;length_from;DECIMAL(10,2);YES;;Довжина від мм;;
+4;time_norms;length_to;DECIMAL(10,2);YES;;Довжина до мм;;
+4;time_norms;diameter_from;DECIMAL(10,3);YES;;Діаметр від мм;;
+4;time_norms;diameter_to;DECIMAL(10,3);YES;;Діаметр до мм;;
+4;time_norms;weight_from;DECIMAL(18,4);YES;;Вага від кг;;
+4;time_norms;weight_to;DECIMAL(18,4);YES;;Вага до кг;;
+4;time_norms;-- НОРМИ --;;;;;;;;
+4;time_norms;setup_time;DECIMAL(10,2);NO;;Тпз хвилин;;
+4;time_norms;piece_time;DECIMAL(10,4);NO;;Тшт хвилин;;
+4;time_norms;time_unit;VARCHAR(20);NO;per_piece;За що: per_piece/per_meter/per_sqm/per_kg/per_cut/per_weld_meter;;
+4;time_norms;-- СЛУЖБОВІ --;;;;;;;;
+4;time_norms;skill_level;INT;YES;;Розряд роботи;;
+4;time_norms;source;VARCHAR(200);YES;;Джерело норми;;
+4;time_norms;notes;TEXT;YES;;Примітки;;
+4;time_norms;is_active;BOOLEAN;NO;true;Активна;;
+;;;;;;;;
+4;consumables;id;UUID;NO;;Унікальний ID;;PK
+4;consumables;code;VARCHAR(50);NO;;Артикул;;UNIQUE
+4;consumables;name;VARCHAR(200);NO;;Найменування;;INDEX
+4;consumables;category;VARCHAR(50);NO;;Категорія: welding_wire/electrode/gas/coolant/abrasive/paint/solvent/other;;INDEX
+4;consumables;unit_id;UUID;NO;;Одиниця виміру;units.id;
+4;consumables;price;DECIMAL(18,4);YES;;Ціна;;
+4;consumables;currency_id;UUID;YES;;Валюта;currencies.id;
+4;consumables;is_active;BOOLEAN;NO;true;Активний;;
+;;;;;;;;
+4;operation_consumables;id;UUID;NO;;Унікальний ID;;PK
+4;operation_consumables;operation_id;UUID;NO;;Операція;operations.id;INDEX
+4;operation_consumables;consumable_id;UUID;NO;;Розхідник;consumables.id;INDEX
+4;operation_consumables;consumption_rate;DECIMAL(18,6);NO;;Норма витрат;;
+4;operation_consumables;rate_type;VARCHAR(20);NO;;Тип: per_unit/per_hour/per_meter/per_sqm/per_kg;;
+4;operation_consumables;notes;TEXT;YES;;Примітки;;
+;;;;;;;;
+4;batch_coefficients;id;UUID;NO;;Унікальний ID;;PK
+4;batch_coefficients;operation_group;VARCHAR(50);YES;;Група операцій (null = для всіх);;INDEX
+4;batch_coefficients;quantity_from;INT;NO;;Кількість від;;
+4;batch_coefficients;quantity_to;INT;NO;;Кількість до;;
+4;batch_coefficients;coefficient;DECIMAL(5,3);NO;;Коефіцієнт (0.6-1.0);;
+4;batch_coefficients;is_active;BOOLEAN;NO;true;Активний;;
+;;;;;;;;
+4;overhead_rates;id;UUID;NO;;Унікальний ID;;PK
+4;overhead_rates;code;VARCHAR(50);NO;;Код;;UNIQUE
+4;overhead_rates;name;VARCHAR(200);NO;;Назва;;
+4;overhead_rates;rate;DECIMAL(8,4);NO;;Ставка (%, коеф);;
+4;overhead_rates;rate_type;VARCHAR(20);NO;;Тип: percent/fixed;;
+4;overhead_rates;base;VARCHAR(50);NO;;База: labor/materials/production_cost/full_cost;;
+4;overhead_rates;calculation_order;INT;NO;0;Порядок розрахунку;;
+4;overhead_rates;is_active;BOOLEAN;NO;true;Активна;;
+=== РІВЕНЬ 5: ПРОЕКТИ ТА ВИРОБИ ===;;;;;;;;
+5;projects;id;UUID;NO;;Унікальний ID;;PK
+5;projects;number;VARCHAR(50);NO;;Номер проекту;;UNIQUE
+5;projects;name;VARCHAR(500);NO;;Найменування;;INDEX
+5;projects;description;TEXT;YES;;Опис;;
+5;projects;client_id;UUID;YES;;Замовник;contractors.id;INDEX
+5;projects;manager_id;UUID;YES;;Менеджер;users.id;INDEX
+5;projects;designer_id;UUID;YES;;Конструктор;users.id;
+5;projects;technologist_id;UUID;YES;;Технолог;users.id;
+5;projects;status;VARCHAR(30);NO;draft;Статус: draft/design/review/approved/production/completed/cancelled;;INDEX
+5;projects;version;VARCHAR(20);NO;1.0;Версія;;
+5;projects;planned_start;DATE;YES;;Планова дата початку;;
+5;projects;planned_end;DATE;YES;;Планова дата завершення;;
+5;projects;actual_start;DATE;YES;;Фактична дата початку;;
+5;projects;actual_end;DATE;YES;;Фактична дата завершення;;
+5;projects;notes;TEXT;YES;;Примітки;;
+5;projects;is_template;BOOLEAN;NO;false;Шаблон виробу;;
+5;projects;created_at;TIMESTAMP;NO;NOW();;;
+5;projects;updated_at;TIMESTAMP;NO;NOW();;;
+5;projects;created_by;UUID;YES;;;users.id;
+;;;;;;;;
+5;items;id;UUID;NO;;Унікальний ID;;PK
+5;items;project_id;UUID;NO;;Проект;projects.id;INDEX
+5;items;parent_id;UUID;YES;;Батьківська позиція;items.id;INDEX
+5;items;-- ІЄРАРХІЯ --;;;;;;;;
+5;items;level;INT;NO;0;Рівень: 0=виріб, 1=вузол, 2=підвузол, 3=деталь;;INDEX
+5;items;path;VARCHAR(500);YES;;Шлях ID: 1/5/12;;INDEX
+5;items;sort_order;INT;NO;0;Порядок у специфікації;;INDEX
+5;items;position_number;VARCHAR(50);YES;;Позиція у специфікації (1, 1.1, 1.1.1);;
+5;items;-- ІДЕНТИФІКАЦІЯ --;;;;;;;;
+5;items;designation;VARCHAR(100);YES;;Позначення (децимальний №);;INDEX
+5;items;name;VARCHAR(500);NO;;Найменування;;INDEX
+5;items;item_type;VARCHAR(30);NO;;Тип: assembly/part/purchased/standard/material;;INDEX
+5;items;-- ДЛЯ ДЕТАЛЕЙ (item_type=part) --;;;;;;;;
+5;items;material_id;UUID;YES;;Матеріал;materials.id;INDEX
+5;items;blank_length;DECIMAL(10,2);YES;;Довжина заготовки мм;;
+5;items;blank_width;DECIMAL(10,2);YES;;Ширина заготовки мм;;
+5;items;blank_thickness;DECIMAL(10,3);YES;;Товщина заготовки мм;;
+5;items;blank_diameter;DECIMAL(10,3);YES;;Діаметр заготовки мм;;
+5;items;blank_weight;DECIMAL(18,6);YES;;Вага заготовки кг (вручну або авто);;
+5;items;finished_weight;DECIMAL(18,6);YES;;Чиста вага деталі кг;;
+5;items;-- ДЛЯ ПОКУПНИХ (item_type=purchased/standard) --;;;;;;;;
+5;items;supplier_id;UUID;YES;;Постачальник;contractors.id;
+5;items;purchase_price;DECIMAL(18,4);YES;;Ціна закупівлі;;
+5;items;purchase_currency_id;UUID;YES;;Валюта;currencies.id;
+5;items;-- ЗАГАЛЬНІ --;;;;;;;;
+5;items;quantity;DECIMAL(18,6);NO;1;Кількість на виріб;;
+5;items;unit_id;UUID;YES;;Одиниця виміру;units.id;
+5;items;drawing_number;VARCHAR(100);YES;;Номер креслення;;
+5;items;revision;VARCHAR(20);YES;;Ревізія креслення;;
+5;items;is_critical;BOOLEAN;NO;false;Критична позиція;;
+5;items;notes;TEXT;YES;;Примітки;;
+5;items;-- РОЗРАХУНКОВІ (заповнюються автоматично) --;;;;;;;;
+5;items;calculated_weight;DECIMAL(18,6);YES;;Розрахункова вага кг;;
+5;items;calculated_area;DECIMAL(18,6);YES;;Розрахункова площа м²;;
+5;items;material_cost;DECIMAL(18,4);YES;;Вартість матеріалу;;
+5;items;labor_cost;DECIMAL(18,4);YES;;Вартість роботи;;
+5;items;total_cost;DECIMAL(18,4);YES;;Загальна вартість;;
+5;items;-- СЛУЖБОВІ --;;;;;;;;
+5;items;is_active;BOOLEAN;NO;true;Активна;;
+5;items;created_at;TIMESTAMP;NO;NOW();;;
+5;items;updated_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+5;item_routes;id;UUID;NO;;Унікальний ID;;PK
+5;item_routes;item_id;UUID;NO;;Деталь;items.id;INDEX
+5;item_routes;sequence;INT;NO;;Номер операції (5, 10, 15);;INDEX
+5;item_routes;operation_id;UUID;NO;;Операція;operations.id;INDEX
+5;item_routes;equipment_id;UUID;YES;;Обладнання;equipment.id;
+5;item_routes;-- КООПЕРАЦІЯ --;;;;;;;;
+5;item_routes;is_external;BOOLEAN;NO;false;На кооперації;;
+5;item_routes;subcontractor_id;UUID;YES;;Підрядник;contractors.id;
+5;item_routes;external_price;DECIMAL(18,4);YES;;Ціна послуги;;
+5;item_routes;-- НОРМИ --;;;;;;;;
+5;item_routes;setup_time;DECIMAL(10,2);YES;;Тпз хвилин;;
+5;item_routes;piece_time;DECIMAL(10,4);YES;;Тшт хвилин;;
+5;item_routes;skill_level;INT;YES;;Розряд;;
+5;item_routes;-- РЕЖИМИ --;;;;;;;;
+5;item_routes;cutting_speed;DECIMAL(10,2);YES;;Швидкість різання м/хв;;
+5;item_routes;feed_rate;DECIMAL(10,4);YES;;Подача мм/об;;
+5;item_routes;cutting_depth;DECIMAL(10,3);YES;;Глибина різання мм;;
+5;item_routes;spindle_speed;INT;YES;;Оберти шпинделя об/хв;;
+5;item_routes;-- ЗВАРЮВАННЯ --;;;;;;;;
+5;item_routes;weld_length;DECIMAL(10,2);YES;;Довжина шва мм;;
+5;item_routes;weld_type;VARCHAR(50);YES;;Тип шва;;
+5;item_routes;weld_position;VARCHAR(20);YES;;Положення шва;;
+5;item_routes;-- РОЗРАХУНКОВІ --;;;;;;;;
+5;item_routes;labor_cost;DECIMAL(18,4);YES;;Вартість роботи (авто);;
+5;item_routes;consumables_cost;DECIMAL(18,4);YES;;Вартість розхідників (авто);;
+5;item_routes;-- СЛУЖБОВІ --;;;;;;;;
+5;item_routes;description;TEXT;YES;;Опис переходів;;
+5;item_routes;notes;TEXT;YES;;Примітки;;
+5;item_routes;is_active;BOOLEAN;NO;true;Активна;;

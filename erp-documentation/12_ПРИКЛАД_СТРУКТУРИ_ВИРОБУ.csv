@@ -1,0 +1,78 @@
+Таблиця;ID;Поле;Значення;Поле;Значення;Поле;Значення;Поле;Значення;Поле;Значення;Поле;Значення;Поле;Значення
+=== ПРОЕКТ ===;;;;;;;;;;;;;;;;;;
+projects;PRJ001;number;ПР-2024-001;name;Кронштейн КР-150;client_id;C001 (Промтех);status;approved;version;1.0;manager_id;user_manager;designer_id;user_designer
+;;;;;;;;;;;;;;;;;;
+=== СТРУКТУРА ВИРОБУ (items) - ДЕРЕВО ===;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+--- РІВЕНЬ 0: ВИРІБ ---;;;;;;;;;;;;;;;;;;
+items;I001;project_id;PRJ001;parent_id;null;level;0;path;I001;sort_order;0;position_number;-;designation;КР-150;name;Кронштейн КР-150;item_type;assembly;quantity;1
+;;;;;;;;;;;;;;;;;;
+--- РІВЕНЬ 1: ВУЗЛИ/ДЕТАЛІ ---;;;;;;;;;;;;;;;;;;
+items;I002;project_id;PRJ001;parent_id;I001;level;1;path;I001/I002;sort_order;1;position_number;1;designation;КР-150-01;name;Пластина основи;item_type;part;quantity;1
+items;I003;project_id;PRJ001;parent_id;I001;level;1;path;I001/I003;sort_order;2;position_number;2;designation;КР-150-02;name;Ребро жорсткості;item_type;part;quantity;4
+items;I004;project_id;PRJ001;parent_id;I001;level;1;path;I001/I004;sort_order;3;position_number;3;designation;КР-150-03;name;Втулка;item_type;part;quantity;2
+items;I005;project_id;PRJ001;parent_id;I001;level;1;path;I001/I005;sort_order;4;position_number;4;designation;Болт М10×30;name;Болт М10×30 кл.8.8;item_type;standard;quantity;4
+items;I006;project_id;PRJ001;parent_id;I001;level;1;path;I001/I006;sort_order;5;position_number;5;designation;Гайка М10;name;Гайка М10 кл.8;item_type;standard;quantity;4
+items;I007;project_id;PRJ001;parent_id;I001;level;1;path;I001/I007;sort_order;6;position_number;6;designation;Шайба 10;name;Шайба плоска 10;item_type;standard;quantity;8
+;;;;;;;;;;;;;;;;;;
+=== ДЕТАЛІЗАЦІЯ ПОЗИЦІЙ ===;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+--- I002: Пластина основи ---;;;;;;;;;;;;;;;;;;
+;I002;material_id;M002 (Лист 4мм);blank_length;300;blank_width;200;blank_thickness;4;calculated_weight;1.884;calculated_area;0.06;material_cost;59.90;;;;
+;;;;;;;;;;;;;;;;;;
+--- I003: Ребро жорсткості ---;;;;;;;;;;;;;;;;;;
+;I003;material_id;M001 (Лист 3мм);blank_length;100;blank_width;50;blank_thickness;3;calculated_weight;0.118;calculated_area;0.005;material_cost;3.83;;;;
+;;;;;;;;;;;;;;;;;;
+--- I004: Втулка ---;;;;;;;;;;;;;;;;;;
+;I004;material_id;M006 (Круг 20);blank_length;30;blank_diameter;20;calculated_weight;0.074;material_cost;2.59;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+--- I005-I007: Покупні/стандартні ---;;;;;;;;;;;;;;;;;;
+;I005;supplier_id;C004;purchase_price;3.50;purchase_currency_id;CUR01;;;;;;;;;;
+;I006;supplier_id;C004;purchase_price;1.20;purchase_currency_id;CUR01;;;;;;;;;;
+;I007;supplier_id;C004;purchase_price;0.80;purchase_currency_id;CUR01;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+=== МАРШРУТИ ВИГОТОВЛЕННЯ (item_routes) ===;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+--- Маршрут для I002 (Пластина основи) ---;;;;;;;;;;;;;;;;;;
+item_routes;IR001;item_id;I002;sequence;5;operation_id;OP005 (Гільйотина);equipment_id;EQ01 (ГН-6.3);setup_time;15;piece_time;4;is_external;false;labor_cost;23.33
+item_routes;IR002;item_id;I002;sequence;10;operation_id;OP010 (Слюсарна);equipment_id;EQ10 (Верстак);setup_time;5;piece_time;10;is_external;false;labor_cost;62.50
+item_routes;IR003;item_id;I002;sequence;15;operation_id;OP025 (Свердління);equipment_id;EQ07 (2Н135);setup_time;10;piece_time;8;is_external;false;labor_cost;90.00
+;;;;;;;;;;;;;;;;;;
+--- Маршрут для I003 (Ребро) ---;;;;;;;;;;;;;;;;;;
+item_routes;IR004;item_id;I003;sequence;5;operation_id;OP005 (Гільйотина);equipment_id;EQ01 (ГН-6.3);setup_time;15;piece_time;2;is_external;false;labor_cost;11.67
+item_routes;IR005;item_id;I003;sequence;10;operation_id;OP010 (Слюсарна);equipment_id;EQ10 (Верстак);setup_time;5;piece_time;5;is_external;false;labor_cost;41.67
+;;;;;;;;;;;;;;;;;;
+--- Маршрут для I004 (Втулка) ---;;;;;;;;;;;;;;;;;;
+item_routes;IR006;item_id;I004;sequence;5;operation_id;OP005 (Відрізна);equipment_id;EQ01;setup_time;10;piece_time;3;is_external;false;labor_cost;15.17
+item_routes;IR007;item_id;I004;sequence;10;operation_id;OP015 (Токарна);equipment_id;EQ04 (16К20);setup_time;20;piece_time;15;is_external;false;labor_cost;233.33
+item_routes;IR008;item_id;I004;sequence;15;operation_id;OP025 (Свердління);equipment_id;EQ07 (2Н135);setup_time;10;piece_time;5;is_external;false;labor_cost;75.00
+;;;;;;;;;;;;;;;;;;
+--- Маршрут складання (на виріб I001) ---;;;;;;;;;;;;;;;;;;
+item_routes;IR009;item_id;I001;sequence;5;operation_id;OP035 (Зварювання);equipment_id;EQ08 (MIG-500);setup_time;15;piece_time;30;weld_length;400;is_external;false;labor_cost;337.50
+item_routes;IR010;item_id;I001;sequence;10;operation_id;OP010 (Слюсарна);equipment_id;EQ10 (Верстак);setup_time;5;piece_time;15;is_external;false;labor_cost;83.33
+item_routes;IR011;item_id;I001;sequence;15;operation_id;OP060 (Контроль);equipment_id;null;setup_time;0;piece_time;10;is_external;false;labor_cost;0
+;;;;;;;;;;;;;;;;;;
+=== КАЛЬКУЛЯЦІЯ (calculations) ===;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+calculations;CALC001;project_id;PRJ001;number;К-2024-001;version;1;quantity;1;currency_id;CUR01;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+--- СТРУКТУРА КАЛЬКУЛЯЦІЇ ---;;;;;;;;;;;;;;;;;;
+;CALC001;materials_cost;75.85;purchased_cost;23.60;waste_return;-3.00;transport_cost;5.00;materials_total;101.45;;;;;;;;;;
+;CALC001;labor_cost;973.50;labor_additional;116.82;labor_taxes;239.87;labor_total;1330.19;;;;;;;;;;
+;CALC001;consumables_cost;45.00;subcontract_cost;0.00;tooling_cost;0.00;;;;;;;;;;;;
+;CALC001;overhead_production;1460.25;overhead_admin;293.69;overhead_sales;146.84;;;;;;;;;;;;
+;CALC001;production_cost;2937.59;full_cost;3378.12;;;;;;;;;;;;;;
+;CALC001;profit_rate;0.25;profit_amount;844.53;price_excl_vat;4222.65;vat_rate_id;VAT01;vat_amount;844.53;price_incl_vat;5067.18;;;;
+;CALC001;production_hours;16.2;production_days;3;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+=== ПОРІВНЯННЯ ПАРТІЙ ===;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;
+Показник;1 шт;10 шт;50 шт;100 шт;;;;;;;;;;;;;;;;
+Матеріали;101.45;1014.50;5072.50;10145.00;;;;;;;;;;;;;;;;
+Робота;1330.19;11971.71;53208.76;95775.77;Коеф. партійн.;1.0;0.9;0.8;0.72;;;;;;;;;;
+Накладні;1900.78;17107.02;76031.20;136856.16;;;;;;;;;;;;;;;;
+Собівартість;3378.12;30391.08;135079.46;243281.03;;;;;;;;;;;;;;;;
+За одиницю;3378.12;3039.11;2701.59;2432.81;;;;;;;;;;;;;;;;
+Ціна з ПДВ;5067.18;45586.62;202619.19;364921.55;;;;;;;;;;;;;;;;
+За одиницю з ПДВ;5067.18;4558.66;4052.38;3649.22;;;;;;;;;;;;;;;;
+Термін днів;3;8;21;38;;;;;;;;;;;;;;;;

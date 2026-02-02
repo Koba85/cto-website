@@ -1,0 +1,432 @@
+Рівень;Таблиця;Поле;Тип;NULL;За замовч.;Опис;FK до;Індекс
+=== РІВЕНЬ 5: КАЛЬКУЛЯЦІЇ ===;;;;;;;;
+5;calculations;id;UUID;NO;;Унікальний ID;;PK
+5;calculations;project_id;UUID;NO;;Проект;projects.id;INDEX
+5;calculations;number;VARCHAR(50);NO;;Номер калькуляції;;UNIQUE
+5;calculations;version;INT;NO;1;Версія калькуляції;;
+5;calculations;quantity;INT;NO;1;Кількість виробів;;
+5;calculations;currency_id;UUID;NO;;Валюта;currencies.id;
+5;calculations;exchange_rate;DECIMAL(18,6);NO;1;Курс на дату;;
+5;calculations;-- МАТЕРІАЛИ --;;;;;;;;
+5;calculations;materials_cost;DECIMAL(18,4);NO;0;Основні матеріали;;
+5;calculations;purchased_cost;DECIMAL(18,4);NO;0;Покупні вироби;;
+5;calculations;waste_return;DECIMAL(18,4);NO;0;Зворотні відходи (-);;
+5;calculations;transport_cost;DECIMAL(18,4);NO;0;ТЗВ;;
+5;calculations;materials_total;DECIMAL(18,4);NO;0;Разом матеріали;;
+5;calculations;-- РОБОТА --;;;;;;;;
+5;calculations;labor_cost;DECIMAL(18,4);NO;0;Основна зарплата;;
+5;calculations;labor_additional;DECIMAL(18,4);NO;0;Додаткова зарплата;;
+5;calculations;labor_taxes;DECIMAL(18,4);NO;0;ЄСВ;;
+5;calculations;labor_total;DECIMAL(18,4);NO;0;Разом зарплата;;
+5;calculations;-- РОЗХІДНИКИ ТА КООПЕРАЦІЯ --;;;;;;;;
+5;calculations;consumables_cost;DECIMAL(18,4);NO;0;Розхідні матеріали;;
+5;calculations;subcontract_cost;DECIMAL(18,4);NO;0;Кооперація;;
+5;calculations;tooling_cost;DECIMAL(18,4);NO;0;Оснастка;;
+5;calculations;-- НАКЛАДНІ --;;;;;;;;
+5;calculations;overhead_production;DECIMAL(18,4);NO;0;Загальновиробничі;;
+5;calculations;overhead_admin;DECIMAL(18,4);NO;0;Адміністративні;;
+5;calculations;overhead_sales;DECIMAL(18,4);NO;0;Збутові;;
+5;calculations;-- ПІДСУМКИ --;;;;;;;;
+5;calculations;production_cost;DECIMAL(18,4);NO;0;Виробнича собівартість;;
+5;calculations;full_cost;DECIMAL(18,4);NO;0;Повна собівартість;;
+5;calculations;-- ЦІНОУТВОРЕННЯ --;;;;;;;;
+5;calculations;profit_rate;DECIMAL(8,4);NO;0.2;Норма прибутку %;;
+5;calculations;profit_amount;DECIMAL(18,4);NO;0;Сума прибутку;;
+5;calculations;price_excl_vat;DECIMAL(18,4);NO;0;Ціна без ПДВ;;
+5;calculations;vat_rate_id;UUID;YES;;Ставка ПДВ;vat_rates.id;
+5;calculations;vat_amount;DECIMAL(18,4);NO;0;Сума ПДВ;;
+5;calculations;price_incl_vat;DECIMAL(18,4);NO;0;Ціна з ПДВ;;
+5;calculations;-- ЗА ОДИНИЦЮ --;;;;;;;;
+5;calculations;unit_cost;DECIMAL(18,4);NO;0;Собівартість за одиницю;;
+5;calculations;unit_price;DECIMAL(18,4);NO;0;Ціна за одиницю;;
+5;calculations;-- ТЕРМІНИ --;;;;;;;;
+5;calculations;production_hours;DECIMAL(10,2);YES;;Трудомісткість год;;
+5;calculations;production_days;DECIMAL(10,2);YES;;Термін виготовлення днів;;
+5;calculations;-- КОЕФІЦІЄНТИ --;;;;;;;;
+5;calculations;batch_coefficient;DECIMAL(5,3);NO;1;Коеф. партійності;;
+5;calculations;complexity_coefficient;DECIMAL(5,3);NO;1;Коеф. складності;;
+5;calculations;urgency_coefficient;DECIMAL(5,3);NO;1;Коеф. терміновості;;
+5;calculations;-- СТАТУС --;;;;;;;;
+5;calculations;status;VARCHAR(20);NO;draft;Статус: draft/approved/archived;;INDEX
+5;calculations;approved_by;UUID;YES;;Затвердив;users.id;
+5;calculations;approved_at;TIMESTAMP;YES;;Дата затвердження;;
+5;calculations;notes;TEXT;YES;;Примітки;;
+5;calculations;created_at;TIMESTAMP;NO;NOW();;;
+5;calculations;created_by;UUID;YES;;;users.id;
+;;;;;;;;
+5;calculation_details;id;UUID;NO;;Унікальний ID;;PK
+5;calculation_details;calculation_id;UUID;NO;;Калькуляція;calculations.id;INDEX
+5;calculation_details;item_id;UUID;NO;;Позиція;items.id;INDEX
+5;calculation_details;line_type;VARCHAR(30);NO;;Тип: material/labor/consumable/purchased/subcontract;;INDEX
+5;calculation_details;-- ОПИС --;;;;;;;;
+5;calculation_details;description;VARCHAR(500);NO;;Опис;;
+5;calculation_details;-- МАТЕРІАЛ (якщо line_type=material) --;;;;;;;;
+5;calculation_details;material_id;UUID;YES;;Матеріал;materials.id;
+5;calculation_details;material_price;DECIMAL(18,4);YES;;Ціна матеріалу на момент;;
+5;calculation_details;material_qty;DECIMAL(18,6);YES;;Кількість матеріалу;;
+5;calculation_details;-- РОБОТА (якщо line_type=labor) --;;;;;;;;
+5;calculation_details;operation_id;UUID;YES;;Операція;operations.id;
+5;calculation_details;equipment_id;UUID;YES;;Обладнання;equipment.id;
+5;calculation_details;hourly_rate;DECIMAL(18,4);YES;;Тариф на момент;;
+5;calculation_details;setup_time;DECIMAL(10,2);YES;;Тпз;;
+5;calculation_details;piece_time;DECIMAL(10,4);YES;;Тшт;;
+5;calculation_details;total_time;DECIMAL(10,2);YES;;Загальний час;;
+5;calculation_details;-- ЗАГАЛЬНІ --;;;;;;;;
+5;calculation_details;quantity;DECIMAL(18,6);NO;1;Кількість;;
+5;calculation_details;unit_cost;DECIMAL(18,4);NO;0;Вартість за одиницю;;
+5;calculation_details;total_cost;DECIMAL(18,4);NO;0;Загальна вартість;;
+5;calculation_details;notes;TEXT;YES;;Примітки;;
+=== РІВЕНЬ 5: ФАЙЛИ ===;;;;;;;;
+5;attachments;id;UUID;NO;;Унікальний ID;;PK
+5;attachments;entity_type;VARCHAR(50);NO;;Тип сутності: project/item/quotation/contract/...;;INDEX
+5;attachments;entity_id;UUID;NO;;ID сутності;;INDEX
+5;attachments;file_type;VARCHAR(50);NO;;Тип файлу: drawing/3d_model/specification/photo/document/certificate/other;;INDEX
+5;attachments;file_name;VARCHAR(255);NO;;Ім'я файлу;;
+5;attachments;file_extension;VARCHAR(20);YES;;Розширення;;
+5;attachments;file_size;BIGINT;YES;;Розмір байт;;
+5;attachments;mime_type;VARCHAR(100);YES;;MIME тип;;
+5;attachments;file_url;TEXT;NO;;URL файлу;;
+5;attachments;thumbnail_url;TEXT;YES;;URL мініатюри;;
+5;attachments;description;TEXT;YES;;Опис;;
+5;attachments;version;INT;NO;1;Версія файлу;;
+5;attachments;is_current;BOOLEAN;NO;true;Поточна версія;;
+5;attachments;uploaded_at;TIMESTAMP;NO;NOW();;;
+5;attachments;uploaded_by;UUID;YES;;;users.id;
+=== РІВЕНЬ 6: ДОКУМЕНТООБІГ - CRM ===;;;;;;;;
+6;inquiries;id;UUID;NO;;Унікальний ID;;PK
+6;inquiries;number;VARCHAR(50);NO;;Номер запиту;;UNIQUE
+6;inquiries;date;DATE;NO;;Дата запиту;;INDEX
+6;inquiries;source;VARCHAR(50);YES;;Джерело: phone/email/website/referral/exhibition/other;;
+6;inquiries;-- КЛІЄНТ --;;;;;;;;
+6;inquiries;client_id;UUID;YES;;Клієнт (якщо існуючий);contractors.id;INDEX
+6;inquiries;client_name;VARCHAR(300);YES;;Назва (для нових);;
+6;inquiries;contact_name;VARCHAR(200);YES;;Контактна особа;;
+6;inquiries;contact_phone;VARCHAR(100);YES;;Телефон;;
+6;inquiries;contact_email;VARCHAR(255);YES;;Email;;
+6;inquiries;-- ЗМІСТ --;;;;;;;;
+6;inquiries;subject;VARCHAR(500);NO;;Тема;;
+6;inquiries;description;TEXT;YES;;Опис потреби;;
+6;inquiries;desired_quantity;INT;YES;;Бажана кількість;;
+6;inquiries;desired_date;DATE;YES;;Бажана дата;;
+6;inquiries;budget;DECIMAL(18,4);YES;;Бюджет;;
+6;inquiries;budget_currency_id;UUID;YES;;Валюта бюджету;currencies.id;
+6;inquiries;-- СТАТУС --;;;;;;;;
+6;inquiries;status;VARCHAR(30);NO;new;Статус: new/processing/quoted/won/lost/cancelled;;INDEX
+6;inquiries;priority;VARCHAR(20);NO;normal;Пріоритет: low/normal/high/urgent;;
+6;inquiries;manager_id;UUID;YES;;Менеджер;users.id;INDEX
+6;inquiries;loss_reason;VARCHAR(200);YES;;Причина втрати;;
+6;inquiries;notes;TEXT;YES;;Примітки;;
+6;inquiries;created_at;TIMESTAMP;NO;NOW();;;
+6;inquiries;updated_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+6;quotations;id;UUID;NO;;Унікальний ID;;PK
+6;quotations;number;VARCHAR(50);NO;;Номер КП;;UNIQUE
+6;quotations;date;DATE;NO;;Дата КП;;INDEX
+6;quotations;inquiry_id;UUID;YES;;Запит;inquiries.id;INDEX
+6;quotations;project_id;UUID;YES;;Проект;projects.id;INDEX
+6;quotations;calculation_id;UUID;YES;;Калькуляція;calculations.id;
+6;quotations;client_id;UUID;NO;;Клієнт;contractors.id;INDEX
+6;quotations;-- СУМИ --;;;;;;;;
+6;quotations;currency_id;UUID;NO;;Валюта;currencies.id;
+6;quotations;exchange_rate;DECIMAL(18,6);NO;1;Курс;;
+6;quotations;subtotal;DECIMAL(18,4);NO;0;Сума без ПДВ;;
+6;quotations;vat_amount;DECIMAL(18,4);NO;0;ПДВ;;
+6;quotations;total;DECIMAL(18,4);NO;0;Разом з ПДВ;;
+6;quotations;-- УМОВИ --;;;;;;;;
+6;quotations;payment_terms;TEXT;YES;;Умови оплати;;
+6;quotations;delivery_terms;TEXT;YES;;Умови доставки;;
+6;quotations;delivery_days;INT;YES;;Термін виготовлення днів;;
+6;quotations;valid_until;DATE;YES;;Дійсна до;;
+6;quotations;warranty_months;INT;YES;;Гарантія місяців;;
+6;quotations;-- СТАТУС --;;;;;;;;
+6;quotations;status;VARCHAR(30);NO;draft;Статус: draft/sent/negotiation/approved/rejected/expired;;INDEX
+6;quotations;version;INT;NO;1;Версія;;
+6;quotations;manager_id;UUID;NO;;Менеджер;users.id;INDEX
+6;quotations;sent_at;TIMESTAMP;YES;;Дата відправки;;
+6;quotations;approved_at;TIMESTAMP;YES;;Дата погодження;;
+6;quotations;rejected_reason;TEXT;YES;;Причина відхилення;;
+6;quotations;notes;TEXT;YES;;Примітки;;
+6;quotations;internal_notes;TEXT;YES;;Внутрішні примітки;;
+6;quotations;created_at;TIMESTAMP;NO;NOW();;;
+6;quotations;updated_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+6;quotation_items;id;UUID;NO;;Унікальний ID;;PK
+6;quotation_items;quotation_id;UUID;NO;;КП;quotations.id;INDEX
+6;quotation_items;line_number;INT;NO;;№ п/п;;
+6;quotation_items;item_id;UUID;YES;;Позиція проекту;items.id;
+6;quotation_items;description;VARCHAR(500);NO;;Опис;;
+6;quotation_items;quantity;DECIMAL(18,4);NO;;Кількість;;
+6;quotation_items;unit_id;UUID;NO;;Одиниця;units.id;
+6;quotation_items;unit_price;DECIMAL(18,4);NO;;Ціна за од.;;
+6;quotation_items;discount_percent;DECIMAL(5,2);NO;0;Знижка %;;
+6;quotation_items;amount;DECIMAL(18,4);NO;;Сума;;
+6;quotation_items;vat_rate_id;UUID;YES;;Ставка ПДВ;vat_rates.id;
+6;quotation_items;vat_amount;DECIMAL(18,4);NO;0;ПДВ;;
+6;quotation_items;total;DECIMAL(18,4);NO;;Разом;;
+6;quotation_items;notes;TEXT;YES;;Примітки;;
+;;;;;;;;
+6;contracts;id;UUID;NO;;Унікальний ID;;PK
+6;contracts;number;VARCHAR(100);NO;;Номер договору;;UNIQUE
+6;contracts;date;DATE;NO;;Дата договору;;INDEX
+6;contracts;quotation_id;UUID;YES;;КП;quotations.id;INDEX
+6;contracts;client_id;UUID;NO;;Клієнт;contractors.id;INDEX
+6;contracts;project_id;UUID;YES;;Проект;projects.id;INDEX
+6;contracts;-- ПРЕДМЕТ --;;;;;;;;
+6;contracts;subject;TEXT;NO;;Предмет договору;;
+6;contracts;contract_type;VARCHAR(30);NO;sale;Тип: sale/service/mixed;;
+6;contracts;-- СУМИ --;;;;;;;;
+6;contracts;currency_id;UUID;NO;;Валюта;currencies.id;
+6;contracts;amount_excl_vat;DECIMAL(18,4);NO;;Сума без ПДВ;;
+6;contracts;vat_amount;DECIMAL(18,4);NO;0;ПДВ;;
+6;contracts;amount_incl_vat;DECIMAL(18,4);NO;;Сума з ПДВ;;
+6;contracts;-- ОПЛАТА --;;;;;;;;
+6;contracts;prepayment_percent;DECIMAL(5,2);YES;;% передоплати;;
+6;contracts;prepayment_amount;DECIMAL(18,4);YES;;Сума передоплати;;
+6;contracts;payment_terms;TEXT;YES;;Умови оплати;;
+6;contracts;payment_days;INT;YES;;Днів на оплату;;
+6;contracts;-- ТЕРМІНИ --;;;;;;;;
+6;contracts;start_date;DATE;YES;;Дата початку;;
+6;contracts;end_date;DATE;YES;;Дата завершення;;
+6;contracts;delivery_date;DATE;YES;;Дата поставки;;
+6;contracts;delivery_terms;TEXT;YES;;Умови поставки;;
+6;contracts;incoterms;VARCHAR(10);YES;;Incoterms;;
+6;contracts;-- СТАТУС --;;;;;;;;
+6;contracts;status;VARCHAR(30);NO;draft;Статус: draft/active/completed/cancelled/suspended;;INDEX
+6;contracts;manager_id;UUID;NO;;Менеджер;users.id;INDEX
+6;contracts;signed_at;TIMESTAMP;YES;;Дата підписання;;
+6;contracts;completed_at;TIMESTAMP;YES;;Дата закриття;;
+6;contracts;notes;TEXT;YES;;Примітки;;
+6;contracts;created_at;TIMESTAMP;NO;NOW();;;
+6;contracts;updated_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+6;invoices;id;UUID;NO;;Унікальний ID;;PK
+6;invoices;number;VARCHAR(50);NO;;Номер рахунку;;UNIQUE
+6;invoices;date;DATE;NO;;Дата;;INDEX
+6;invoices;contract_id;UUID;YES;;Договір;contracts.id;INDEX
+6;invoices;client_id;UUID;NO;;Клієнт;contractors.id;INDEX
+6;invoices;invoice_type;VARCHAR(30);NO;;Тип: prepayment/partial/final/proforma;;INDEX
+6;invoices;-- СУМИ --;;;;;;;;
+6;invoices;currency_id;UUID;NO;;Валюта;currencies.id;
+6;invoices;amount_excl_vat;DECIMAL(18,4);NO;;Без ПДВ;;
+6;invoices;vat_amount;DECIMAL(18,4);NO;0;ПДВ;;
+6;invoices;amount_incl_vat;DECIMAL(18,4);NO;;З ПДВ;;
+6;invoices;-- ОПЛАТА --;;;;;;;;
+6;invoices;due_date;DATE;YES;;Термін оплати;;
+6;invoices;paid_amount;DECIMAL(18,4);NO;0;Оплачено;;
+6;invoices;paid_date;DATE;YES;;Дата останньої оплати;;
+6;invoices;-- СТАТУС --;;;;;;;;
+6;invoices;status;VARCHAR(30);NO;draft;Статус: draft/sent/partial/paid/overdue/cancelled;;INDEX
+6;invoices;sent_at;TIMESTAMP;YES;;Дата відправки;;
+6;invoices;notes;TEXT;YES;;Примітки;;
+6;invoices;created_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+6;payments;id;UUID;NO;;Унікальний ID;;PK
+6;payments;invoice_id;UUID;NO;;Рахунок;invoices.id;INDEX
+6;payments;payment_date;DATE;NO;;Дата оплати;;INDEX
+6;payments;amount;DECIMAL(18,4);NO;;Сума;;
+6;payments;currency_id;UUID;NO;;Валюта;currencies.id;
+6;payments;payment_method;VARCHAR(50);YES;;Спосіб: bank/cash/card;;
+6;payments;reference;VARCHAR(200);YES;;№ платіжки;;
+6;payments;notes;TEXT;YES;;Примітки;;
+6;payments;created_at;TIMESTAMP;NO;NOW();;;
+=== РІВЕНЬ 6: ЗАКУПІВЛІ ===;;;;;;;;
+6;purchase_orders;id;UUID;NO;;Унікальний ID;;PK
+6;purchase_orders;number;VARCHAR(50);NO;;Номер замовлення;;UNIQUE
+6;purchase_orders;date;DATE;NO;;Дата;;INDEX
+6;purchase_orders;supplier_id;UUID;NO;;Постачальник;contractors.id;INDEX
+6;purchase_orders;order_type;VARCHAR(30);NO;materials;Тип: materials/services;;
+6;purchase_orders;-- СУМИ --;;;;;;;;
+6;purchase_orders;currency_id;UUID;NO;;Валюта;currencies.id;
+6;purchase_orders;amount_excl_vat;DECIMAL(18,4);NO;0;Без ПДВ;;
+6;purchase_orders;vat_amount;DECIMAL(18,4);NO;0;ПДВ;;
+6;purchase_orders;amount_incl_vat;DECIMAL(18,4);NO;0;З ПДВ;;
+6;purchase_orders;-- ТЕРМІНИ --;;;;;;;;
+6;purchase_orders;expected_date;DATE;YES;;Очікувана дата;;
+6;purchase_orders;received_date;DATE;YES;;Дата отримання;;
+6;purchase_orders;-- СТАТУС --;;;;;;;;
+6;purchase_orders;status;VARCHAR(30);NO;draft;Статус: draft/sent/confirmed/partial/received/cancelled;;INDEX
+6;purchase_orders;production_order_id;UUID;YES;;Виробниче замовлення;production_orders.id;INDEX
+6;purchase_orders;notes;TEXT;YES;;Примітки;;
+6;purchase_orders;created_at;TIMESTAMP;NO;NOW();;;
+6;purchase_orders;created_by;UUID;YES;;;users.id;
+;;;;;;;;
+6;purchase_order_items;id;UUID;NO;;Унікальний ID;;PK
+6;purchase_order_items;purchase_order_id;UUID;NO;;Замовлення;purchase_orders.id;INDEX
+6;purchase_order_items;line_number;INT;NO;;№ п/п;;
+6;purchase_order_items;material_id;UUID;YES;;Матеріал;materials.id;
+6;purchase_order_items;description;VARCHAR(500);NO;;Опис;;
+6;purchase_order_items;quantity;DECIMAL(18,4);NO;;Кількість;;
+6;purchase_order_items;unit_id;UUID;NO;;Одиниця;units.id;
+6;purchase_order_items;unit_price;DECIMAL(18,4);NO;;Ціна за од.;;
+6;purchase_order_items;amount;DECIMAL(18,4);NO;;Сума;;
+6;purchase_order_items;received_qty;DECIMAL(18,4);NO;0;Отримано;;
+6;purchase_order_items;notes;TEXT;YES;;Примітки;;
+=== РІВЕНЬ 6: ВИРОБНИЦТВО ===;;;;;;;;
+6;production_orders;id;UUID;NO;;Унікальний ID;;PK
+6;production_orders;number;VARCHAR(50);NO;;Номер ВЗ;;UNIQUE
+6;production_orders;date;DATE;NO;;Дата;;INDEX
+6;production_orders;contract_id;UUID;YES;;Договір;contracts.id;INDEX
+6;production_orders;project_id;UUID;NO;;Проект;projects.id;INDEX
+6;production_orders;quantity;INT;NO;1;Кількість;;
+6;production_orders;-- ТЕРМІНИ --;;;;;;;;
+6;production_orders;planned_start;DATE;YES;;План. початок;;
+6;production_orders;planned_end;DATE;YES;;План. завершення;;
+6;production_orders;actual_start;DATE;YES;;Факт. початок;;
+6;production_orders;actual_end;DATE;YES;;Факт. завершення;;
+6;production_orders;-- СТАТУС --;;;;;;;;
+6;production_orders;status;VARCHAR(30);NO;planned;Статус: planned/materials/in_progress/quality/completed/cancelled/on_hold;;INDEX
+6;production_orders;priority;INT;NO;5;Пріоритет 1-10;;
+6;production_orders;progress_percent;DECIMAL(5,2);NO;0;% виконання;;
+6;production_orders;-- ВІДПОВІДАЛЬНІ --;;;;;;;;
+6;production_orders;manager_id;UUID;YES;;Менеджер;users.id;
+6;production_orders;foreman_id;UUID;YES;;Майстер;users.id;
+6;production_orders;notes;TEXT;YES;;Примітки;;
+6;production_orders;created_at;TIMESTAMP;NO;NOW();;;
+=== РІВЕНЬ 7: ОПЕРАЦІЙНИЙ ОБЛІК ===;;;;;;;;
+7;stock_movements;id;UUID;NO;;Унікальний ID;;PK
+7;stock_movements;movement_type;VARCHAR(30);NO;;Тип: receipt/issue/transfer/adjustment/return;;INDEX
+7;stock_movements;date;TIMESTAMP;NO;;Дата/час;;INDEX
+7;stock_movements;document_type;VARCHAR(50);YES;;Тип документа;;
+7;stock_movements;document_number;VARCHAR(100);YES;;Номер документа;;
+7;stock_movements;-- СКЛАД --;;;;;;;;
+7;stock_movements;warehouse_id;UUID;NO;;Склад;warehouses.id;INDEX
+7;stock_movements;warehouse_to_id;UUID;YES;;Склад призначення (для transfer);warehouses.id;
+7;stock_movements;-- МАТЕРІАЛ --;;;;;;;;
+7;stock_movements;material_id;UUID;NO;;Матеріал;materials.id;INDEX
+7;stock_movements;batch_id;UUID;YES;;Партія;material_batches.id;
+7;stock_movements;quantity;DECIMAL(18,6);NO;;Кількість (+ прихід, - розхід);;
+7;stock_movements;unit_id;UUID;NO;;Одиниця;units.id;
+7;stock_movements;unit_cost;DECIMAL(18,4);YES;;Вартість одиниці;;
+7;stock_movements;total_cost;DECIMAL(18,4);YES;;Загальна вартість;;
+7;stock_movements;-- ДЖЕРЕЛО --;;;;;;;;
+7;stock_movements;contractor_id;UUID;YES;;Контрагент;contractors.id;
+7;stock_movements;production_order_id;UUID;YES;;Виробниче замовлення;production_orders.id;
+7;stock_movements;-- СЛУЖБОВІ --;;;;;;;;
+7;stock_movements;reason;TEXT;YES;;Причина (для adjustment);;
+7;stock_movements;notes;TEXT;YES;;Примітки;;
+7;stock_movements;created_at;TIMESTAMP;NO;NOW();;;
+7;stock_movements;created_by;UUID;NO;;;users.id;
+;;;;;;;;
+7;material_batches;id;UUID;NO;;Унікальний ID;;PK
+7;material_batches;material_id;UUID;NO;;Матеріал;materials.id;INDEX
+7;material_batches;batch_number;VARCHAR(100);NO;;Номер партії/плавки;;INDEX
+7;material_batches;supplier_id;UUID;YES;;Постачальник;contractors.id;
+7;material_batches;certificate_number;VARCHAR(100);YES;;№ сертифіката;;
+7;material_batches;certificate_url;TEXT;YES;;URL сертифіката;;
+7;material_batches;received_date;DATE;NO;;Дата отримання;;
+7;material_batches;expiry_date;DATE;YES;;Термін придатності;;
+7;material_batches;initial_quantity;DECIMAL(18,6);NO;;Початкова кількість;;
+7;material_batches;current_quantity;DECIMAL(18,6);NO;;Поточний залишок;;
+7;material_batches;unit_cost;DECIMAL(18,4);YES;;Вартість одиниці;;
+7;material_batches;warehouse_id;UUID;NO;;Склад;warehouses.id;INDEX
+7;material_batches;location;VARCHAR(100);YES;;Місце зберігання;;
+7;material_batches;notes;TEXT;YES;;Примітки;;
+;;;;;;;;
+7;work_orders;id;UUID;NO;;Унікальний ID;;PK
+7;work_orders;number;VARCHAR(50);NO;;Номер наряду;;UNIQUE
+7;work_orders;date;DATE;NO;;Дата;;INDEX
+7;work_orders;production_order_id;UUID;NO;;Виробниче замовлення;production_orders.id;INDEX
+7;work_orders;item_id;UUID;NO;;Деталь/вузол;items.id;INDEX
+7;work_orders;item_route_id;UUID;YES;;Операція маршруту;item_routes.id;
+7;work_orders;department_id;UUID;NO;;Дільниця;departments.id;INDEX
+7;work_orders;equipment_id;UUID;YES;;Обладнання;equipment.id;
+7;work_orders;-- ПЛАН --;;;;;;;;
+7;work_orders;planned_quantity;DECIMAL(18,4);NO;;Планова кількість;;
+7;work_orders;planned_start;TIMESTAMP;YES;;План. початок;;
+7;work_orders;planned_end;TIMESTAMP;YES;;План. завершення;;
+7;work_orders;-- ФАКТ --;;;;;;;;
+7;work_orders;actual_quantity;DECIMAL(18,4);NO;0;Виконано;;
+7;work_orders;defect_quantity;DECIMAL(18,4);NO;0;Брак;;
+7;work_orders;actual_start;TIMESTAMP;YES;;Факт. початок;;
+7;work_orders;actual_end;TIMESTAMP;YES;;Факт. завершення;;
+7;work_orders;-- СТАТУС --;;;;;;;;
+7;work_orders;status;VARCHAR(30);NO;planned;Статус: planned/in_progress/completed/cancelled;;INDEX
+7;work_orders;worker_id;UUID;YES;;Виконавець;users.id;INDEX
+7;work_orders;notes;TEXT;YES;;Примітки;;
+;;;;;;;;
+7;time_entries;id;UUID;NO;;Унікальний ID;;PK
+7;time_entries;work_order_id;UUID;NO;;Наряд;work_orders.id;INDEX
+7;time_entries;worker_id;UUID;NO;;Працівник;users.id;INDEX
+7;time_entries;date;DATE;NO;;Дата;;INDEX
+7;time_entries;start_time;TIME;YES;;Час початку;;
+7;time_entries;end_time;TIME;YES;;Час завершення;;
+7;time_entries;hours_worked;DECIMAL(6,2);NO;;Відпрацьовано годин;;
+7;time_entries;quantity_produced;DECIMAL(18,4);NO;0;Виготовлено;;
+7;time_entries;quantity_defect;DECIMAL(18,4);NO;0;Брак;;
+7;time_entries;hourly_rate;DECIMAL(18,4);YES;;Тариф грн/год;;
+7;time_entries;amount;DECIMAL(18,4);YES;;Сума;;
+7;time_entries;notes;TEXT;YES;;Примітки;;
+7;time_entries;created_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+7;quality_records;id;UUID;NO;;Унікальний ID;;PK
+7;quality_records;record_type;VARCHAR(30);NO;;Тип: incoming/in_process/final/defect;;INDEX
+7;quality_records;date;TIMESTAMP;NO;;Дата;;INDEX
+7;quality_records;production_order_id;UUID;YES;;Виробниче замовлення;production_orders.id;INDEX
+7;quality_records;item_id;UUID;YES;;Деталь;items.id;
+7;quality_records;work_order_id;UUID;YES;;Наряд;work_orders.id;
+7;quality_records;material_batch_id;UUID;YES;;Партія матеріалу;material_batches.id;
+7;quality_records;-- РЕЗУЛЬТАТ --;;;;;;;;
+7;quality_records;quantity_checked;DECIMAL(18,4);NO;;Перевірено;;
+7;quality_records;quantity_passed;DECIMAL(18,4);NO;;Придатних;;
+7;quality_records;quantity_rejected;DECIMAL(18,4);NO;0;Забраковано;;
+7;quality_records;result;VARCHAR(20);NO;;Результат: passed/failed/conditional;;
+7;quality_records;-- ДЛЯ БРАКУ --;;;;;;;;
+7;quality_records;defect_type;VARCHAR(100);YES;;Тип дефекту;;
+7;quality_records;defect_cause;VARCHAR(200);YES;;Причина;;
+7;quality_records;responsible_id;UUID;YES;;Винуватець;users.id;
+7;quality_records;decision;VARCHAR(50);YES;;Рішення: repair/scrap/accept/return;;
+7;quality_records;cost_of_defect;DECIMAL(18,4);YES;;Вартість браку;;
+7;quality_records;-- СЛУЖБОВІ --;;;;;;;;
+7;quality_records;inspector_id;UUID;NO;;Контролер;users.id;
+7;quality_records;notes;TEXT;YES;;Примітки;;
+7;quality_records;created_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+7;serial_numbers;id;UUID;NO;;Унікальний ID;;PK
+7;serial_numbers;production_order_id;UUID;NO;;Виробниче замовлення;production_orders.id;INDEX
+7;serial_numbers;item_id;UUID;YES;;Виріб;items.id;INDEX
+7;serial_numbers;serial_number;VARCHAR(100);NO;;Серійний номер;;UNIQUE
+7;serial_numbers;manufactured_date;DATE;NO;;Дата виготовлення;;
+7;serial_numbers;client_id;UUID;YES;;Клієнт;contractors.id;INDEX
+7;serial_numbers;shipment_date;DATE;YES;;Дата відвантаження;;
+7;serial_numbers;warranty_until;DATE;YES;;Гарантія до;;
+7;serial_numbers;status;VARCHAR(30);NO;produced;Статус: produced/shipped/installed/warranty/returned;;INDEX
+7;serial_numbers;notes;TEXT;YES;;Примітки;;
+=== РІВЕНЬ 8: СЛУЖБОВІ ===;;;;;;;;
+8;document_versions;id;UUID;NO;;Унікальний ID;;PK
+8;document_versions;entity_type;VARCHAR(50);NO;;Тип сутності;;INDEX
+8;document_versions;entity_id;UUID;NO;;ID сутності;;INDEX
+8;document_versions;version;INT;NO;;Номер версії;;
+8;document_versions;changes;TEXT;YES;;Опис змін;;
+8;document_versions;snapshot;JSON;YES;;Знімок даних;;
+8;document_versions;created_at;TIMESTAMP;NO;NOW();;;
+8;document_versions;created_by;UUID;NO;;;users.id;
+;;;;;;;;
+8;approvals;id;UUID;NO;;Унікальний ID;;PK
+8;approvals;entity_type;VARCHAR(50);NO;;Тип сутності;;INDEX
+8;approvals;entity_id;UUID;NO;;ID сутності;;INDEX
+8;approvals;step;INT;NO;;Крок погодження;;
+8;approvals;role_required;VARCHAR(100);YES;;Потрібна роль;;
+8;approvals;approver_id;UUID;YES;;Хто погоджує;users.id;INDEX
+8;approvals;status;VARCHAR(20);NO;pending;Статус: pending/approved/rejected;;INDEX
+8;approvals;comment;TEXT;YES;;Коментар;;
+8;approvals;decided_at;TIMESTAMP;YES;;Дата рішення;;
+8;approvals;created_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+8;document_relations;id;UUID;NO;;Унікальний ID;;PK
+8;document_relations;source_type;VARCHAR(50);NO;;Тип джерела;;INDEX
+8;document_relations;source_id;UUID;NO;;ID джерела;;INDEX
+8;document_relations;target_type;VARCHAR(50);NO;;Тип цілі;;INDEX
+8;document_relations;target_id;UUID;NO;;ID цілі;;INDEX
+8;document_relations;relation_type;VARCHAR(30);NO;;Тип: creates/replaces/references/cancels;;
+8;document_relations;created_at;TIMESTAMP;NO;NOW();;;
+;;;;;;;;
+8;audit_log;id;UUID;NO;;Унікальний ID;;PK
+8;audit_log;user_id;UUID;YES;;Користувач;users.id;INDEX
+8;audit_log;action;VARCHAR(20);NO;;Дія: create/update/delete/view/export/print;;INDEX
+8;audit_log;entity_type;VARCHAR(50);NO;;Тип сутності;;INDEX
+8;audit_log;entity_id;UUID;NO;;ID сутності;;INDEX
+8;audit_log;old_values;JSON;YES;;Старі значення;;
+8;audit_log;new_values;JSON;YES;;Нові значення;;
+8;audit_log;ip_address;VARCHAR(45);YES;;IP адреса;;
+8;audit_log;user_agent;TEXT;YES;;User Agent;;
+8;audit_log;created_at;TIMESTAMP;NO;NOW();;INDEX;
