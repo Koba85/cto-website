@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP Система - Демо</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --bg: #f8fafc; --text: #0f172a; }
+        body { background: var(--bg); color: var(--text); }
+    </style>
+</head>
+<body class="bg-slate-50">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-slate-200 h-screen fixed left-0 top-0 overflow-y-auto shadow-sm">
+        <div class="p-4 border-b border-slate-200">
+            <h1 class="text-xl font-bold text-blue-600">ERP Система</h1>
+            <p class="text-xs text-slate-500 mt-1">Управління виробництвом</p>
+        </div>
+        <nav class="p-4">
+            <div class="mb-6">
+                <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Головна</h2>
+                <ul class="space-y-1">
+                    <li><a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-50 text-blue-600 font-medium">
+                        <span>📊</span> Дашборд
+                    </a></li>
+                </ul>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Довідники</h2>
+                <ul class="space-y-1">
+                    <li><a href="#departments" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <span>🏢</span> Підрозділи
+                    </a></li>
+                    <li><a href="#materials" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <span>🔩</span> Матеріали
+                    </a></li>
+                    <li><a href="#equipment" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <span>⚙️</span> Обладнання
+                    </a></a></li>
+                    <li><a href="#operations" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <span>🔧</span> Операції
+                    </a></li>
+                </ul>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Виробництво</h2>
+                <ul class="space-y-1">
+                    <li><a href="#projects" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <span>📋</span> Замовлення
+                    </a></li>
+                    <li><a href="#calculation" class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <span>🧮</span> Калькуляція
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-slate-200 bg-white">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">👤</div>
+                <div>
+                    <p class="text-sm font-medium text-slate-700">Адміністратор</p>
+                    <p class="text-xs text-slate-500">admin@erp.ua</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 p-8">
+        <!-- Dashboard Section -->
+        <section id="dashboard">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-slate-800">Панель керування</h1>
+                <p class="text-slate-500 mt-1">Загальний огляд системи</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-slate-500">Активні замовлення</p>
+                            <p class="text-3xl font-bold mt-2 text-blue-600">3</p>
+                            <p class="text-xs text-slate-400 mt-1">з 5 всього</p>
+                        </div>
+                        <div class="text-3xl">📋</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-slate-500">Матеріали на складі</p>
+                            <p class="text-3xl font-bold mt-2 text-green-600">12</p>
+                            <p class="text-xs text-slate-400 mt-1">2 потребують поповнення</p>
+                        </div>
+                        <div class="text-3xl">🔩</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-slate-500">Обладнання</p>
+                            <p class="text-3xl font-bold mt-2 text-purple-600">8/10</p>
+                            <p class="text-xs text-slate-400 mt-1">працює / всього</p>
+                        </div>
+                        <div class="text-3xl">⚙️</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-slate-500">Дохід за місяць</p>
+                            <p class="text-3xl font-bold mt-2 text-amber-600">280K</p>
+                            <p class="text-xs text-slate-400 mt-1">15 замовлень</p>
+                        </div>
+                        <div class="text-3xl">💰</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tables Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Active Projects -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                    <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+                        <h2 class="font-semibold text-slate-800">Активні замовлення</h2>
+                        <a href="#projects" class="text-sm text-blue-600 hover:underline">Всі замовлення →</a>
+                    </div>
+                    <div class="p-4">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-xs text-slate-500 uppercase">
+                                    <th class="pb-3">Номер</th>
+                                    <th class="pb-3">Назва</th>
+                                    <th class="pb-3">Статус</th>
+                                    <th class="pb-3 text-right">Термін</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="text-sm">
+                                    <td class="py-3 font-mono text-slate-600">PRJ-2024-001</td>
+                                    <td class="py-3 text-slate-800">Кронштейн КР-150</td>
+                                    <td class="py-3"><span class="px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">Виробництво</span></td>
+                                    <td class="py-3 text-right text-slate-500">15.02.2024</td>
+                                </tr>
+                                <tr class="text-sm">
+                                    <td class="py-3 font-mono text-slate-600">PRJ-2024-003</td>
+                                    <td class="py-3 text-slate-800">Опора ОП-100</td>
+                                    <td class="py-3"><span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">Затверджено</span></td>
+                                    <td class="py-3 text-right text-slate-500">10.03.2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Equipment Status -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                    <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+                        <h2 class="font-semibold text-slate-800">Стан обладнання</h2>
+                        <a href="#equipment" class="text-sm text-blue-600 hover:underline">Все обладнання →</a>
+                    </div>
+                    <div class="p-4">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-xs text-slate-500 uppercase">
+                                    <th class="pb-3">Код</th>
+                                    <th class="pb-3">Назва</th>
+                                    <th class="pb-3">Дільниця</th>
+                                    <th class="pb-3 text-right">Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="text-sm">
+                                    <td class="py-3 font-mono text-slate-600">EQ01</td>
+                                    <td class="py-3 text-slate-800">Гільйотина НГ-16</td>
+                                    <td class="py-3 text-slate-500 text-xs">Заготівельна</td>
+                                    <td class="py-3 text-right"><span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Працює</span></td>
+                                </tr>
+                                <tr class="text-sm">
+                                    <td class="py-3 font-mono text-slate-600">EQ03</td>
+                                    <td class="py-3 text-slate-800">Лазер TRUMPF</td>
+                                    <td class="py-3 text-slate-500 text-xs">Заготівельна</td>
+                                    <td class="py-3 text-right"><span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">ТО</span></td>
+                                </tr>
+                                <tr class="text-sm">
+                                    <td class="py-3 font-mono text-slate-600">EQ09</td>
+                                    <td class="py-3 text-slate-800">Зварювальний TIG</td>
+                                    <td class="py-3 text-slate-500 text-xs">Зварювальна</td>
+                                    <td class="py-3 text-right"><span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">Ремонт</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Departments Section -->
+        <section id="departments" class="mt-16 pt-8 border-t border-slate-200">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Підрозділи</h1>
+                    <p class="text-slate-500 mt-1">Організаційна структура підприємства</p>
+                </div>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">➕ Додати підрозділ</button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Tree -->
+                <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200">
+                    <div class="px-4 py-3 border-b border-slate-200">
+                        <h2 class="font-semibold text-slate-800">Структура (дерево)</h2>
+                    </div>
+                    <div class="p-4 font-mono text-sm">
+                        <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                            <span class="text-lg">🏭</span> <span class="font-medium">Виробництво</span> <span class="text-slate-400">(DEP01)</span>
+                        </div>
+                        <div class="ml-6">
+                            <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">├─ <span class="text-lg">🏭</span> Заготівельна дільниця <span class="text-slate-400">(DEP02)</span></div>
+                            <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">├─ <span class="text-lg">🏭</span> Механічна дільниця <span class="text-slate-400">(DEP03)</span></div>
+                            <div class="px-3 py-2 rounded-lg bg-blue-50 text-blue-700 cursor-pointer">├─ <span class="text-lg">🏭</span> <b>Зварювальна дільниця</b> <span class="text-blue-400">(DEP04)</span></div>
+                            <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">├─ <span class="text-lg">🏭</span> Слюсарна дільниця <span class="text-slate-400">(DEP05)</span></div>
+                            <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">├─ <span class="text-lg">🏭</span> Складальна дільниця <span class="text-slate-400">(DEP06)</span></div>
+                            <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">├─ <span class="text-lg">🏭</span> Фарбувальна дільниця <span class="text-slate-400">(DEP07)</span></div>
+                            <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">└─ <span class="text-lg">📋</span> ВТК <span class="text-slate-400">(DEP08)</span></div>
+                        </div>
+                        <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer mt-2">
+                            <span class="text-lg">🏢</span> <span class="font-medium">Адміністрація</span> <span class="text-slate-400">(DEP09)</span>
+                        </div>
+                        <div class="px-3 py-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                            <span class="text-lg">📦</span> <span class="font-medium">Склад</span> <span class="text-slate-400">(DEP10)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="bg-white rounded-xl border border-slate-200">
+                    <div class="px-4 py-3 border-b border-slate-200">
+                        <h2 class="font-semibold text-slate-800">Деталі</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-center pb-4 border-b border-slate-100">
+                            <div class="text-4xl mb-2">🏭</div>
+                            <h3 class="text-lg font-bold text-slate-800">Зварювальна дільниця</h3>
+                            <p class="text-sm text-slate-500">ЗВ</p>
+                        </div>
+                        <div class="space-y-3 mt-4">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Код:</span>
+                                <span class="font-mono text-slate-800">DEP04</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Рівень:</span>
+                                <span class="text-slate-800">1</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Шлях:</span>
+                                <span class="font-mono text-xs text-slate-600">DEP01/DEP04</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Тип:</span>
+                                <span class="px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">Виробничий</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-4 pt-4 border-t border-slate-100">
+                            <button class="flex-1 px-3 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">Редагувати</button>
+                            <button class="px-3 py-2 text-sm border border-red-200 text-red-600 rounded-lg hover:bg-red-50">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Materials Section -->
+        <section id="materials" class="mt-16 pt-8 border-t border-slate-200">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Матеріали</h1>
+                    <p class="text-slate-500 mt-1">Довідник матеріалів та складські залишки</p>
+                </div>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">➕ Додати матеріал</button>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Пошук</label>
+                        <input type="text" placeholder="Код або назва матеріалу..." class="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                    </div>
+                    <div class="w-full md:w-64">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Група</label>
+                        <select class="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                            <option>Всі групи</option>
+                            <option>Прокат</option>
+                            <option>  Листовий прокат</option>
+                            <option>    Лист гарячекатаний</option>
+                            <option>  Сортовий прокат</option>
+                            <option>Кріплення</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                <table class="w-full">
+                    <thead class="bg-slate-50">
+                        <tr class="text-left text-xs text-slate-500 uppercase">
+                            <th class="px-4 py-3 font-medium">Код</th>
+                            <th class="px-4 py-3 font-medium">Назва</th>
+                            <th class="px-4 py-3 font-medium">Група</th>
+                            <th class="px-4 py-3 font-medium">Тип</th>
+                            <th class="px-4 py-3 font-medium text-right">Розмір</th>
+                            <th class="px-4 py-3 font-medium text-right">Ціна</th>
+                            <th class="px-4 py-3 font-medium text-right">Залишок</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-sm text-slate-600">ЛИСТ-3-S235</td>
+                            <td class="px-4 py-3 font-medium text-slate-800">Лист 3мм S235</td>
+                            <td class="px-4 py-3 text-sm text-slate-500">Лист гарячекатаний</td>
+                            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">Лист</span></td>
+                            <td class="px-4 py-3 text-right text-sm text-slate-600">3 мм</td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-slate-800">32.50 ₴</span><span class="text-xs text-slate-500">/кг</span></td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-green-600">1 250</span><span class="text-xs text-slate-500 ml-1">кг</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-sm text-slate-600">ЛИСТ-4-S235</td>
+                            <td class="px-4 py-3 font-medium text-slate-800">Лист 4мм S235</td>
+                            <td class="px-4 py-3 text-sm text-slate-500">Лист гарячекатаний</td>
+                            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">Лист</span></td>
+                            <td class="px-4 py-3 text-right text-sm text-slate-600">4 мм</td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-slate-800">32.50 ₴</span><span class="text-xs text-slate-500">/кг</span></td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-green-600">2 100</span><span class="text-xs text-slate-500 ml-1">кг</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-sm text-slate-600">КРУГ-20-S235</td>
+                            <td class="px-4 py-3 font-medium text-slate-800">Круг 20мм S235</td>
+                            <td class="px-4 py-3 text-sm text-slate-500">Круг</td>
+                            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Круг</span></td>
+                            <td class="px-4 py-3 text-right text-sm text-slate-600">Ø20 мм</td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-slate-800">38.00 ₴</span><span class="text-xs text-slate-500">/кг</span></td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-red-600">450</span><span class="text-xs text-slate-500 ml-1">кг</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-sm text-slate-600">БОЛТ-M10x30</td>
+                            <td class="px-4 py-3 font-medium text-slate-800">Болт М10×30 8.8</td>
+                            <td class="px-4 py-3 text-sm text-slate-500">Болти</td>
+                            <td class="px-4 py-3"><span class="px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">Кріплення</span></td>
+                            <td class="px-4 py-3 text-right text-sm text-slate-600">-</td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-slate-800">4.50 ₴</span><span class="text-xs text-slate-500">/шт</span></td>
+                            <td class="px-4 py-3 text-right"><span class="font-medium text-green-600">5 000</span><span class="text-xs text-slate-500 ml-1">шт</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="px-4 py-3 bg-slate-50 border-t border-slate-200">
+                    <span class="text-sm text-slate-500">Знайдено: 4 з 12 матеріалів</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculation Section -->
+        <section id="calculation" class="mt-16 pt-8 border-t border-slate-200">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-slate-800">Калькулятор вартості</h1>
+                <p class="text-slate-500 mt-1">Швидкий розрахунок собівартості деталі</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Input -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6">
+                    <h2 class="font-semibold text-slate-800 mb-4">Вхідні дані</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Матеріал</label>
+                            <select class="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                                <option>Лист 3мм S235 — 32.50 ₴/кг</option>
+                                <option>Лист 4мм S235 — 32.50 ₴/кг</option>
+                                <option>Лист 5мм S355 — 35.00 ₴/кг</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Вага деталі (кг)</label>
+                            <input type="number" value="2.5" class="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Трудомісткість (год)</label>
+                            <input type="number" value="1.5" class="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Розмір партії (шт)</label>
+                            <input type="number" value="10" class="w-full px-3 py-2 border border-slate-300 rounded-lg">
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h3 class="text-sm font-medium text-slate-700 mb-2">Коефіцієнти партійності</h3>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="px-2 py-1 rounded bg-slate-100 text-slate-600">1 шт: ×1.0</div>
+                            <div class="px-2 py-1 rounded bg-blue-100 text-blue-700 font-medium">2—10 шт: ×0.85</div>
+                            <div class="px-2 py-1 rounded bg-slate-100 text-slate-600">11—50 шт: ×0.70</div>
+                            <div class="px-2 py-1 rounded bg-slate-100 text-slate-600">51—100 шт: ×0.60</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl border border-slate-200 p-6">
+                        <h2 class="font-semibold text-slate-800 mb-4">Розрахунок (за 1 шт)</h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Матеріал (2.5 кг × 32.5 ₴)</span>
+                                <span class="font-medium text-slate-800">81.25 ₴</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Робота (1.5 год × 450 ₴)</span>
+                                <span class="font-medium text-slate-800">675.00 ₴</span>
+                            </div>
+                            <div class="flex justify-between text-sm border-t border-slate-100 pt-2">
+                                <span class="text-slate-500">Проміжний підсумок</span>
+                                <span class="font-medium text-slate-800">756.25 ₴</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Накладні (25%)</span>
+                                <span class="font-medium text-slate-800">189.06 ₴</span>
+                            </div>
+                            <div class="flex justify-between text-sm border-t border-slate-100 pt-2">
+                                <span class="text-slate-600 font-medium">Собівартість</span>
+                                <span class="font-bold text-slate-800">945.31 ₴</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Маржа (20%)</span>
+                                <span class="font-medium text-slate-800">189.06 ₴</span>
+                            </div>
+                            <div class="flex justify-between text-sm border-t border-slate-200 pt-2">
+                                <span class="text-slate-700 font-semibold">Ціна за 1 шт</span>
+                                <span class="font-bold text-lg text-blue-600">1 134.38 ₴</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
+                        <h2 class="font-semibold mb-4">Результат для партії 10 шт</h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-blue-100">Коефіцієнт партійності</span>
+                                <span class="font-bold">×0.85</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-blue-100">Ціна за 1 шт (з коеф.)</span>
+                                <span class="font-bold">964.22 ₴</span>
+                            </div>
+                            <div class="flex justify-between border-t border-blue-400 pt-3">
+                                <span class="text-lg font-medium">Загальна вартість</span>
+                                <span class="text-2xl font-bold">9 642.22 ₴</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-blue-400 text-sm text-blue-100">
+                            <p>Економія за рахунок партії: 1 701.56 ₴ (15%)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 p-6">
+                        <h2 class="font-semibold text-slate-800 mb-4">Порівняння партій</h2>
+                        <div class="grid grid-cols-4 gap-2 text-center text-sm">
+                            <div class="p-3 rounded-lg bg-slate-50">
+                                <p class="font-bold text-slate-800">1 шт</p>
+                                <p class="text-xs text-slate-500">×1.0</p>
+                                <p class="font-medium text-blue-600">1 134 ₴</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-blue-100 border-2 border-blue-500">
+                                <p class="font-bold text-slate-800">10 шт</p>
+                                <p class="text-xs text-slate-500">×0.85</p>
+                                <p class="font-medium text-blue-600">964 ₴</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50">
+                                <p class="font-bold text-slate-800">50 шт</p>
+                                <p class="text-xs text-slate-500">×0.70</p>
+                                <p class="font-medium text-blue-600">794 ₴</p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50">
+                                <p class="font-bold text-slate-800">100 шт</p>
+                                <p class="text-xs text-slate-500">×0.60</p>
+                                <p class="font-medium text-blue-600">681 ₴</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-sm text-slate-500">
+            <p>ERP Система для виробництва металоконструкцій</p>
+            <p class="mt-1">Демо-версія • 2024</p>
+        </footer>
+    </main>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
